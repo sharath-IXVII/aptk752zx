@@ -72,6 +72,7 @@ def short_metadata(meta: dict, episode_id: str | None) -> dict:
     title = hook if len(hook) <= 90 else meta["title"]
     return {
         "title": f"{title} #shorts"[:100],
-        "description": f"{hook}\n\n{link}{meta['title']}\n\n#shorts #electronics #howitworks",
+        "description": f"{hook}\n\n{link}{meta['title']}\n\n#shorts #electronics #howitworks "
+                       + " ".join(meta.get("description", "").split("\n")[-1].split()[:8]),
         "tags": ["shorts", "electronics", "how it works", "engineering"] + meta.get("tags", [])[:8],
     }
