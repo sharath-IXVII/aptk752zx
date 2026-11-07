@@ -13,5 +13,7 @@ and 2 are published a day (12:00 and 18:00 India time), each with a vertical Sho
 4. **Upload:** an SEO title and description, the title-screen thumbnail, and scheduling.
    NotebookLM's own Short (or a clip cut from the episode) is uploaded with it.
 
-Setup and fixes: see `MAINTENANCE.md`. Content modes: `CONTENT_MODE` = `electronics` (default),
+Live channel: https://youtube.com/@getyr_ece
+
+Setup and fixes: see `MAINTENANCE.md`. Licence: MIT (free to reuse for your own educational channel). Content modes: `CONTENT_MODE` = `electronics` (default),
 `stories` or `series`.
