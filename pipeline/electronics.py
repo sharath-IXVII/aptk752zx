@@ -119,7 +119,15 @@ def mark_used(topic: str) -> None:
 def next_topic() -> str:
     done = set(used())
     left = [t for t in all_topics() if t not in done] or all_topics()
-    return random.choice(left)
+    picks = random.sample(left, min(8, len(left)))
+    try:  # choose the one people search for most (more YouTube autocomplete results)
+        from pipeline.packaging import search_suggestions
+        scores = {t: len(search_suggestions(f"how does {t} work")) +
+                  len(search_suggestions(f"{t} working")) for t in picks}
+        log.info("Search interest: %s", scores)
+        return max(picks, key=scores.get)
+    except Exception:
+        return picks[0]
 
 
 def write_script(topic: str) -> dict:
@@ -206,7 +214,7 @@ SCRIPT:
 
 Write:
 - title: 40-65 characters, the way students search, curiosity + clarity, e.g.
-  "How Does a Ceiling Fan Actually Work? (Explained Simply)", "What's Inside Your Phone
+  "How Does a Ceiling Fan Actually Work?", "What's Inside Your Phone
   Charger?", "How AirPods Work - The Tech Inside". No emojis.
 - cover_text: 2-4 words for the title screen and thumbnail, e.g. "HOW FANS WORK".
 - short_hook: one gripping sentence (max 12 words) for the vertical Short, e.g.
@@ -216,7 +224,7 @@ Write:
   3) a line inviting students to ask questions in the comments. No links, no hashtags.
 - hashtags: 3, e.g. "#electronics", "#howitworks", "#engineering"
 - tags: 15 search tags (e.g. "how {topic} works", "{topic} working principle",
-  "{topic} explained", "electronics for students", "ECE"), most important first.
+  "{topic} explained", "how {topic} works inside", "ECE"), most important first.
 
 Return JSON: {{"title": "...", "cover_text": "...", "short_hook": "...", "description": "...",
 "hashtags": ["#..."], "tags": ["..."]}}""", temperature=0.5, max_tokens=2000,
