@@ -176,6 +176,7 @@ async def main(force: bool) -> None:
             plan.book(state, slot)
         job["video_id"] = video_id
         save_state(state)  # saved at once, so a later error can never upload it twice
+        add_to_playlist(meta, video_id)
         await upload_short(state, body if body.exists() else final, short_raw, meta,
                            video_id, slot)
 
@@ -246,6 +247,17 @@ async def upload_short(state: dict, episode: Path, short_raw: Path, meta: dict,
     social.queue_short(state, short, meta, video_id, None)
     social.publish_due(state)
     save_state(state)
+
+
+def add_to_playlist(meta: dict, video_id: str) -> None:
+    """Related videos go into one playlist (created on first use), so they autoplay."""
+    if not meta.get("playlist"):
+        return
+    try:
+        from pipeline.youtube_upload import add_to_playlist as add
+        add(video_id, meta["playlist"])
+    except Exception as exc:
+        log.warning("Could not add to playlist: %s", exc)
 
 
 def finish_job(state: dict, job: dict, video_id: str | None, today: str) -> None:
