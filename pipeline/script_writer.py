@@ -230,7 +230,10 @@ Return JSON: {{"title": "<title, corrected if needed>", "script": "<corrected sc
 def create_script() -> dict:
     """Part 2: the next episode. CONTENT_MODE: stories (default, twist stories), series
     (Words That Shape You) or trending."""
-    mode = os.getenv("CONTENT_MODE") or "electronics"
+    mode = os.getenv("CONTENT_MODE") or "search"
+    if mode == "search":  # growth mode: what people search for right now
+        from pipeline import searchtopics
+        return searchtopics.create_script()
     if mode == "electronics":  # How It Works - electronics for students (default)
         from pipeline import electronics
         return electronics.create_script()

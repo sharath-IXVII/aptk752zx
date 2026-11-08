@@ -249,6 +249,9 @@ async def upload_short(state: dict, episode: Path, short_raw: Path, meta: dict,
 
 
 def finish_job(state: dict, job: dict, video_id: str | None, today: str) -> None:
+    if job["script"].get("search_topic"):
+        from pipeline import searchtopics
+        searchtopics.mark_used(job["script"]["search_topic"])
     if job["script"].get("ece_topic"):
         from pipeline import electronics
         electronics.mark_used(job["script"]["ece_topic"])
