@@ -170,7 +170,7 @@ def search_demand(phrase: str) -> int | None:
     Many people search it -> the top results have many views. None = could not check."""
     key = os.getenv("YOUTUBE_API_KEY")
     if not key:
-        return None
+        return _demand_from_page(phrase)
     import httpx
     try:
         r = httpx.get("https://www.googleapis.com/youtube/v3/search", timeout=30, params={
@@ -187,6 +187,29 @@ def search_demand(phrase: str) -> int | None:
         return views[len(views) // 2] if views else 0
     except Exception as exc:
         log.warning("Could not check search demand for '%s': %s", phrase, exc)
+        return None
+
+
+def _demand_from_page(phrase: str) -> int | None:
+    """Same measure without an API key: read the view counts on YouTube's public search page."""
+    import httpx
+    try:
+        r = httpx.get("https://www.youtube.com/results", timeout=30, follow_redirects=True,
+                      params={"search_query": phrase, "sp": "EgIQAQ%3D%3D", "hl": "en", "gl": "US"},
+                      headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                               "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+                               "Accept-Language": "en-US,en;q=0.9"},
+                      cookies={"CONSENT": "YES+1", "SOCS": "CAI"})
+        r.raise_for_status()
+        counts = [int(n.replace(",", "")) for n in re.findall(
+            r'"viewCountText":\{"simpleText":"([\d,]+) views"', r.text)][:10]
+        if not counts:
+            log.warning("No view counts on the YouTube search page for '%s'", phrase)
+            return None
+        counts.sort()
+        return counts[len(counts) // 2]
+    except Exception as exc:
+        log.warning("Could not read the YouTube search page for '%s': %s", phrase, exc)
         return None
 
 
