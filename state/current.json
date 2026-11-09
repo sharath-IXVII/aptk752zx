@@ -1,5 +1,5 @@
 {
-  "notebooklm_started_at": "2026-11-09T12:38:16.486162+05:30",
+  "notebooklm_started_at": "2026-11-09T18:32:22.936781+05:30",
   "notebooks_to_delete": [],
   "scheduled": [
     "2026-11-09T12:00:00+05:30",
@@ -22,58 +22,11 @@
     "2026-11-16T18:00:00+05:30"
   ],
   "shorts": {
-    "2026-11-08": 2
+    "2026-11-09": 1
   },
   "uploaded_date": "2026-11-09",
   "uploads": {
-    "2026-11-09": 3
+    "2026-11-09": 4
   },
-  "reels": [],
-  "job": {
-    "date": "2026-11-09",
-    "script": {
-      "title": "How Phone Chargers Work: The Hidden Circuit Inside",
-      "script": "Welcome. You are holding a piece of technology that performs a miracle every single day. Tucked inside that plastic brick is a high-speed electronic switch capable of turning 120 or 240 volts of raw wall power into a tiny, safe 5 volts your phone can actually use. But here is the part most people miss: if you pierce that casing or use a cheap knockoff, that 120 volts becomes a literal tiny explosion capable of killing you. Today, we are going to crack open that brick. We are going to trace the exact path electricity takes, from the moment it hits your wall socket, to the moment it safely enters your phone. By the end, you will understand not just how it works, but how to stay safe while it does it.\n\nLet's start with the problem. Your phone battery is a chemical tank storing about 3.7 volts. But your wall outlet? That is pumping out 120 volts in the US, or 230 volts in India and Europe. That is a massive, dangerous gap. If you simply connected a wire from the wall to your phone, the current would be so high it would instantly melt the phone's internal components—or worse, cause a fire. We need a translator. We need a circuit that steps that voltage down safely.\n\nInside that unassuming brick is a component called a transformer. But a standard transformer is huge and heavy. We don't want a brick the size of a brick, we want one the size of a matchbox. So, how do we shrink a transformer? We use a trick called switching. Instead of letting the AC power flow steadily, we blast it on and off millions of times a second using a component called a MOSFET. Think of it like a high-speed light switch flickering so fast your eye can't see it. This creates a pulsing square wave of electricity. This pulse is much easier to manipulate than steady 120-volt power.\n\nNow, we have our pulsing wave. The next step is the actual stepping down. We pass this pulse through a tiny transformer wound with thin copper wire. Because the current is changing so rapidly, the magnetic field inside the transformer collapses and builds up instantly. According to the laws of electromagnetism, we can control exactly how much voltage comes out by the number of times we wrap that wire. We wrap the input side many times and the output side few times. This physics trick drops our 120 volts down to a manageable AC level, perhaps 12 or 15 volts, which is then rectified and regulated.\n\nBut wait—your phone needs 5 volts, not 5 volts AC. We aren't done yet. That 12-15 volt AC output is still too raw. It is like water coming out of a fire hose at a pressure your phone cannot handle. We need a regulator. Inside the brick, there is a tiny integrated circuit, often a chip about the size of a grain of rice. This chip acts as a pressure valve. It looks at the output voltage. If it is too high, it wastes the extra energy as heat. If it is too low, it lets more through. It is constantly adjusting, ensuring that no matter what the wall voltage does, your phone always receives a steady, precise 5 volts.\n\nBut there is a catch. This entire process—switching, transforming, regulating—creates heat. That is why the brick gets warm after an hour of charging. That heat is wasted energy. Engineers work hard to minimize it using tiny capacitors and inductors that store and release energy without turning it into heat. But the real hero here is the safety loop. That chip I mentioned? It also monitors for shorts. If you happen to pierce the cable or spill liquid, the chip detects the abnormal current flow and cuts power instantly. It is a literal lifesaver.\n\nNow, let's talk about the cable itself. You might wonder, why does a good cable matter? Inside that thin rubber exterior are copper wires. Their thickness, called the gauge, matters. A thin wire has high resistance. According to Ohm's law, high resistance means heat. If you use a cheap, thin cable, the electricity struggles to get through, the cable gets hot, and your phone charges slowly. A thick, high-quality cable has low resistance, allowing the maximum current to flow efficiently from the brick to the phone. This is why you should always look for cables that feel substantial, not flimsy.\n\nA quick word on safety, because this matters. Never, ever open a phone charger brick with your bare hands while it is plugged in. Even when unplugged, capacitors inside can hold a charge. The internal components are designed to be tamper-proof for a reason. If your charger is flickering, making a high-pitched whining sound, or the cable is frayed, stop using it immediately. Those are signs the internal insulation has failed, and 120 volts is leaking where it shouldn't be.\n\nLet's recap what we learned today. We started with the terrifying gap between 120 wall volts and the 5 volts your phone needs. We explored the switching trick that turns steady power into a high-speed pulse. We looked at the transformer that uses magnetism to step that voltage down. We examined the regulator chip that keeps the output perfectly steady at 5 volts, acting as a safety valve. And we talked about the cable, the unsung hero that determines how fast and safely that energy travels.\n\nYou now know the hidden circuit inside your charger. It is a masterpiece of physics and engineering, turning dangerous wall power into the fuel your phone runs on. If you found this breakdown helpful, hit that like button—it helps other curious minds find the video. And if you want to understand the other hidden components inside your tech, hit subscribe and ring the bell. I'll see you in the next video.\n\nGoodbye.",
-      "topic": "How Phone Chargers Work: The Hidden Circuit Inside",
-      "search_topic": "How Phone Chargers Work: The Hidden Circuit Inside",
-      "search_phrase": "how phone charger works",
-      "visual_style": "Animate the whole video as a premium, modern explainer: smooth motion graphics, animated diagrams that build step by step, realistic screens and terminals where relevant, cutaways and zoom-ins, clear labels and arrows. Every scene moves - no still slides. On-screen text only for the title and short labels. No logos or brand names.",
-      "sources": [],
-      "research": {},
-      "date": "2026-11-09"
-    },
-    "meta": {
-      "title": "How Phone Charger Works: The 120V to 5V Dangerous Transformation",
-      "cover_text": "INSIDE THE BRICK",
-      "short_hook": "Why your charger could kill you if you open it.",
-      "description": "We open a phone charger to trace the exact path electricity takes from the wall socket to your phone. We examine the high-speed switching transformer that steps down 120 volts of raw wall power into the 5 volts your phone uses safely. We uncover the regulator chip that acts as a pressure valve and the cable gauge that determines charging speed. By the end, you will understand not just how it works, but how to stay safe while it does it.\n\nAbout GetYr_ECE: how everyday electronics really work - chargers, fans, phones, chips and networks, accurately and in depth. New videos every day.\nSubscribe and turn on notifications so you never miss a video.\n\n#Electronics #ElectricalEngineering #TechTutorial #HowPhoneChargerWorks #HowPhoneChargingWorks #HowMobileChargerWorksTamil #HowMobileChargerWorksInHindi #HowMobilePhoneChargerWorks #HowCellPhoneChargerWorks #HowWirelessPhoneChargingWorks #HowCarMobileChargerWorks #HowDoPhoneChargersWork #HowAMobileChargerWorks #PhoneChargerCircuit #HowDoesAChargerWork",
-      "hashtags": [
-        "#Electronics",
-        "#ElectricalEngineering",
-        "#TechTutorial"
-      ],
-      "tags": [
-        "how phone charger works",
-        "how phone charging works",
-        "how mobile charger works tamil",
-        "how mobile charger works in hindi",
-        "how mobile phone charger works",
-        "how cell phone charger works",
-        "how wireless phone charging works",
-        "how car mobile charger works",
-        "how do phone chargers work",
-        "how a mobile charger works",
-        "phone charger circuit",
-        "how does a charger work",
-        "electronics basics",
-        "power supply internals",
-        "120v to 5v conversion",
-        "MOSFET switching",
-        "transformer physics",
-        "phone safety"
-      ],
-      "playlist": "How Technology Works"
-    },
-    "attempts": 2
-  }
+  "reels": []
 }
