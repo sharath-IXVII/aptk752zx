@@ -12,9 +12,9 @@ try:
     up = ch["contentDetails"]["relatedPlaylists"]["uploads"]
     items = yt.playlistItems().list(part="contentDetails", playlistId=up, maxResults=12).execute()["items"]
     ids = [i["contentDetails"]["videoId"] for i in items]
-    for v in yt.videos().list(part="snippet,status", id=",".join(ids)).execute()["items"]:
+    for v in yt.videos().list(part="snippet,status,processingDetails", id=",".join(ids)).execute()["items"]:
         s = v["status"]
-        print(f'  {v["snippet"]["publishedAt"][:16]}  {s["privacyStatus"]:8} publishAt={s.get("publishAt","-")[:16]}  {s.get("uploadStatus")}  {v["snippet"]["title"][:60]}')
+        print(f'  {v["snippet"]["publishedAt"][:16]}  {s["privacyStatus"]:8} publishAt={s.get("publishAt","-")[:16]}  {s.get("uploadStatus")} {s.get("rejectionReason","") or s.get("failureReason","")} {v.get("processingDetails",{}).get("processingStatus","")}  {v["snippet"]["title"][:55]}')
 except Exception as e:
     print("YouTube check failed:", str(e)[:400])
 
