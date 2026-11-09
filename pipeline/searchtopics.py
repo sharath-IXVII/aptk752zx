@@ -219,8 +219,8 @@ def _low_demand() -> list[str]:
 
 def pick_topic() -> dict:
     """Pick a topic with proven big search demand. Topics whose top YouTube results have a
-    median below MIN_SEARCH_VIEWS (default 100,000) are skipped and never suggested again."""
-    need = int(os.getenv("MIN_SEARCH_VIEWS") or 100000)
+    median below MIN_SEARCH_VIEWS (default 50,000) are skipped and never suggested again."""
+    need = int(os.getenv("MIN_SEARCH_VIEWS") or 50000)
     rejected: list[str] = []
     for attempt in range(6):
         r = _pick_once(rejected + _low_demand()[-60:])
