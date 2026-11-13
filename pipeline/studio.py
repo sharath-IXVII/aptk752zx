@@ -158,7 +158,8 @@ NARRATION:
 {script["script"]}
 
 Rules:
-- Split the narration into 18-30 scenes, in order, 25-45 words each. Use ALL of the narration - do not
+- Split the narration into 22-40 scenes, in order, 20-40 words each - start a NEW visual every time the
+  explanation moves to a new idea, part or step (roughly every 8-15 seconds), so the picture keeps changing. Use ALL of the narration - do not
   summarise or shorten it: the scenes' narration together must be at least {need} words. Keep its wording
   and facts; you may only add short connecting sentences.
 - Teach in depth like a great human teacher: explain how it ACTUALLY works, step by step, with the
@@ -248,6 +249,34 @@ def normalize(ep: dict, final_pass: bool = False) -> dict:
             s = {"type": "steps", "chapter": s.get("chapter", ""), "narration": s["narration"],
                  "title": s.get("title", ""), "items": items or [s["narration"][:60]]}
         out.append(s)
+    # the picture keeps changing: a scene with more than ~45 words (about 15 s) is split at a sentence break
+    split = []
+    for x in out:
+        words = (x.get("narration") or "").split()
+        if len(words) > 45 and x.get("type") not in ("lab-title", "lab-outro", "question", "cover"):
+            sents = re.findall(r"[^.!?]+[.!?]+", x["narration"]) or [x["narration"]]
+            half, acc, a = len(words) / 2, 0, []
+            for k2, st in enumerate(sents):
+                a.append(st); acc += len(st.split())
+                if acc >= half and k2 < len(sents) - 1:
+                    break
+            first, second = " ".join(a).strip(), " ".join(sents[len(a):]).strip()
+            if first and second:
+                x2 = json.loads(json.dumps(x)); x["narration"] = first; x2["narration"] = second
+                if x2.get("type") == "rectifier":  # continue the cycle instead of restarting it
+                    x2["start"] = float(x.get("start", 0)) + float(x.get("cycles", 1)) / 2
+                split += [x, x2]; continue
+        split.append(x)
+    out = split
+    # no static lists: every "steps" scene becomes an animated diagram (boxes appear, arrows draw, each lights up)
+    for x in out:
+        if x.get("type") == "steps" and x.get("items"):
+            items = [str(i)[:40] for i in x["items"]][:6]; n = len(items)
+            x["type"] = "diagram"
+            x["parts"] = [{"id": f"p{j}", "label": it, "x": (8 + j * (84 / (n - 1))) if n > 1 else 50,
+                           "y": 30 if j % 2 == 0 else 70, "shape": "pill" if j in (0, n - 1) else "box"} for j, it in enumerate(items)]
+            x["arrows"] = [[f"p{j}", f"p{j + 1}", ""] for j in range(n - 1)]
+            x["steps"] = [{"highlight": [f"p{j}"] + ([f"p{j - 1}"] if j else []), "note": ""} for j in range(n)]
     # questions go to the end (Quick quiz), before the outro; at most 3
     qs = [x for x in out if x.get("type") == "question" and not x.get("reveal")][:5] if QUIZ else []
     rest = [x for x in out if x.get("type") != "question"]  # (without QUIZ every question is removed)

@@ -17,6 +17,8 @@ These rules are given to the lesson writer AI and the reviewer AI for EVERY vide
    commands) and each step is explained: what it does and why.
 5. ONLY ANIMATIONS from the first second to the last: no static title cards and no text lists. The opening
    and ending play over the lesson's main animation; lists and recaps become animated diagrams.
+5b. The animation keeps changing as the explanation moves on: a new visual for every new idea, part or step
+   (about every 8-15 seconds), constant gentle camera motion, never one picture held for long.
 6. Videos are long and detailed (5-10 minutes). Never summarise the script into tiny scenes.
 7. No questions / quiz for now.
 8. 100% accurate: every fact, number, formula, direction of current, command and menu path is correct.

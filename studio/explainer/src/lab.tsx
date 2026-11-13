@@ -74,7 +74,9 @@ export const LabFrame: React.FC<{ children: React.ReactNode; caption?: string; d
       {L.pattern === "scan" && <AbsoluteFill style={{ backgroundImage: `repeating-linear-gradient(0deg, ${L.grid} 0px, ${L.grid} 1px, transparent 2px, transparent ${4 * u}px)` }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: `${(f * 0.6) % 120 - 10}%`, height: "8%", background: `linear-gradient(transparent, ${L.grid2}, transparent)` }} /></AbsoluteFill>}
       {L.pattern === "grain" && <AbsoluteFill style={{ opacity: 0.08, mixBlendMode: "screen" }}><svg width="100%" height="100%"><filter id="lg"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={f % 50} /></filter><rect width="100%" height="100%" filter="url(#lg)" /></svg></AbsoluteFill>}
-      <AbsoluteFill style={{ opacity: scene?.type === "cover" ? 1 : Math.min(fade(f, 0, 8), out) }}>{children}</AbsoluteFill>
+      <AbsoluteFill style={{ opacity: scene?.type === "cover" ? 1 : Math.min(fade(f, 0, 8), out),
+        // gentle camera motion so a held picture never looks frozen (alternating direction per scene)
+        transform: scene?.type === "cover" ? undefined : `scale(${interpolate(f, [0, dur], [1, 1.035])}) translateX(${interpolate(f, [0, dur], [0, ((scene?.idx ?? 0) % 2 ? -1 : 1) * 0.8])}%)` }}>{children}</AbsoluteFill>
       {/* channel badge + chapter */}
       <div style={{ position: "absolute", left: 40 * u, top: 34 * u, display: "flex", alignItems: "center", gap: 14 * u, fontFamily: MONO }}>
         <div style={{ border: `${2 * u}px solid ${L.cyan}`, color: L.cyan, fontSize: 18 * u, fontWeight: 700, padding: `${4 * u}px ${10 * u}px`, letterSpacing: 2 * u }}>
