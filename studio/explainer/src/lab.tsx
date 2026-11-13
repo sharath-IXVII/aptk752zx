@@ -386,7 +386,8 @@ export const FormulaLab: React.FC<any> = ({ formula, terms = [], example = [] })
 export const TitleLab: React.FC<any> = ({ kicker, title, subtitle }) => {
   const f = useCurrentFrame(); const { u } = useU();
   return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", textAlign: "center", padding: "0 6%" }}>
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", textAlign: "center", padding: "0 6%",
+      background: `radial-gradient(ellipse 48% 30% at center, ${L.bg0}f2 0%, ${L.bg0}d9 60%, transparent 100%)` }}>
       <div style={{ fontFamily: MONO, color: L.cyan, letterSpacing: 8 * u, fontSize: 26 * u, opacity: fade(f, 4) }}>{kicker}</div>
       <div style={{ fontFamily: SANS, fontWeight: 800, color: L.text, fontSize: Math.min(150, 2000 / Math.max(8, title.length)) * u, marginTop: 20 * u, letterSpacing: -2 * u,
         opacity: fade(f, 10, 16), transform: `translateY(${rise(f, 10)}px)` }}>{title}</div>
@@ -414,7 +415,8 @@ export const StepsLab: React.FC<any> = ({ title, items = [], dur }) => {
 export const OutroLab: React.FC<any> = ({ title, lines = [], cta = "Subscribe for the next lesson" }) => {
   const f = useCurrentFrame(); const { u } = useU();
   return (
-    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", textAlign: "center",
+      background: `radial-gradient(ellipse 48% 30% at center, ${L.bg0}f2 0%, ${L.bg0}d9 60%, transparent 100%)` }}>
       <div style={{ fontFamily: SANS, fontWeight: 800, color: L.text, fontSize: 96 * u, opacity: fade(f, 2) }}>{title}</div>
       {lines.map((l: string, i: number) => <div key={i} style={{ fontFamily: MONO, color: L.cyan, fontSize: 34 * u, marginTop: 18 * u, opacity: fade(f, 14 + i * 10) }}>✓ {l}</div>)}
       <div style={{ marginTop: 50 * u, fontFamily: MONO, color: L.bg0, background: L.amber, fontSize: 30 * u, fontWeight: 700, padding: `${14 * u}px ${30 * u}px`, borderRadius: 10 * u, opacity: fade(f, 40) }}>{cta}</div>

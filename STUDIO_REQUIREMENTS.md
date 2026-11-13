@@ -15,7 +15,8 @@ These rules are given to the lesson writer AI and the reviewer AI for EVERY vide
    oscilloscope waves, app-screen clicks, installer pages, diagrams.
 4. Anything to download, install or set up is shown step by step (website, installer pages, clicks,
    commands) and each step is explained: what it does and why.
-5. Title cards and text lists are not visuals. Use them only for the opening and the recap.
+5. ONLY ANIMATIONS from the first second to the last: no static title cards and no text lists. The opening
+   and ending play over the lesson's main animation; lists and recaps become animated diagrams.
 6. Videos are long and detailed (5-10 minutes). Never summarise the script into tiny scenes.
 7. No questions / quiz for now.
 8. 100% accurate: every fact, number, formula, direction of current, command and menu path is correct.

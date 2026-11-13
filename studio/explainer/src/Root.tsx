@@ -29,9 +29,12 @@ const Film: React.FC<{ ep: any; pick?: number[]; hook?: string; short?: boolean 
       {scenes.map((s: any) => {
         const d = framesOf(s); const from = at; at += d; const Comp = LAB_SCENES[s.type] || DOMAIN_SCENES[s.type] || STORY_SCENES[s.type] || VISUAL_SCENES[s.type] || SCENES[s.type];
         const vis = s.type === "cover" && s.visual ? (LAB_SCENES[s.visual.type] || DOMAIN_SCENES[s.visual.type] || STORY_SCENES[s.visual.type] || VISUAL_SCENES[s.visual.type]) : undefined;
+        // opening and ending play over the lesson's main animation (never a static card)
+        const bgScene = lab && (s.type === "lab-title" || s.type === "lab-outro") ? mainVisual(ep) : null;
+        const Bg = bgScene ? (LAB_SCENES[bgScene.type] || DOMAIN_SCENES[bgScene.type] || STORY_SCENES[bgScene.type] || VISUAL_SCENES[bgScene.type]) : undefined;
         return (
           <Sequence key={s.idx} from={from} durationInFrames={d}>
-            {lab ? <LabFrame caption={s.narration} dur={d} scene={s} ep={ep} progress={(from + d) / all}><Comp {...s} dur={d} Visual={vis} /></LabFrame>
+            {lab ? <LabFrame caption={s.narration} dur={d} scene={s} ep={ep} progress={(from + d) / all}>{Bg && <AbsoluteFill style={{ opacity: 0.75 }}><Bg {...bgScene} dur={d} /></AbsoluteFill>}<Comp {...s} dur={d} Visual={vis} /></LabFrame>
                  : <Frame caption={s.narration} dur={d}><Comp {...s} dur={d} /></Frame>}
             {s.audio && <Audio src={staticFile(`audio/${s.audio_key || "s" + s.idx}.mp3`)} />}
           </Sequence>
@@ -53,6 +56,11 @@ const total = (ep: any, pick?: number[], hook?: boolean, short?: boolean) =>
   short && ep.short_scenes ? ep.short_scenes.reduce((a: number, s: any) => a + framesOf(s), 0)
   : (pick ? pick.map((i) => ep.scenes[i]) : ep.scenes).reduce((a: number, s: any) => a + framesOf(s), hook ? 75 : 0);
 
+const MAIN = ["rectifier", "image", "code", "network", "story", "screen", "installer", "chart", "diagram", "array", "terminal", "capacitor", "wave", "phone", "flow"];
+const mainVisual = (ep: any) => {
+  const pool = (ep.scenes || []).filter((x: any) => MAIN.includes(x.type));
+  return pool.sort((a: any, b: any) => MAIN.indexOf(a.type) - MAIN.indexOf(b.type))[0] || null;
+};
 // the most visual scene of the lesson becomes the thumbnail background
 const VISUAL = ["rectifier", "image", "code", "network", "story", "screen", "installer", "chart", "diagram", "array", "terminal", "capacitor", "wave", "phone", "flow", "formula"];
 const Thumb: React.FC<{ ep: any }> = ({ ep }) => {
