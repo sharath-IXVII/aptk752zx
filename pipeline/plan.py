@@ -21,7 +21,8 @@ STATE_FILE = Path("state/current.json")
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 # Runs come every hour, so a 5.5-hour minimum gap means a new video starts about every 6
 # hours (4 a day). A full 6-hour minimum would slip to ~7 hours because of the hourly runs.
-NOTEBOOKLM_GAP = dt.timedelta(hours=5, minutes=30)
+# 3 videos a day, all public at the 3 daily slots (no extra 4th video scheduled ahead).
+NOTEBOOKLM_GAP = dt.timedelta(hours=7, minutes=40)
 MIN_LEAD = dt.timedelta(minutes=30)
 
 

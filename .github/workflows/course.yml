@@ -1,0 +1,67 @@
+name: Course chapter
+
+# Renders the next chapter listed in gptk755blend/studio/explainer/episodes/network/order.json
+# (with the channel intro/outro) and uploads it to the "Network Theory" playlist, scheduled one a day.
+on:
+  schedule:
+    - cron: "41 3 * * *"
+  workflow_dispatch:
+    inputs:
+      publish_now:
+        description: "Make this chapter public at once (instead of scheduling)"
+        type: boolean
+        default: false
+
+concurrency: {group: course, cancel-in-progress: false}
+permissions: {contents: write}
+
+jobs:
+  chapter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: {repository: sharath11yr/gptk755blend, path: blend}
+      - name: Next chapter
+        id: ep
+        run: |
+          pip install -q python-dotenv google-api-python-client google-auth
+          e=$(python -m pipeline.course next blend/studio/explainer/episodes/network/order.json)
+          echo "ep=$e" >> $GITHUB_OUTPUT; echo "next: ${e:-none}"
+      - uses: actions/setup-node@v4
+        if: steps.ep.outputs.ep != ''
+        with: {node-version: 22}
+      - name: Render
+        if: steps.ep.outputs.ep != ''
+        working-directory: blend/studio/explainer
+        run: |
+          EP="episodes/${{ steps.ep.outputs.ep }}"
+          npm ci || npm install
+          sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng ffmpeg
+          pip install -q edge-tts "kokoro>=0.9.4" soundfile
+          python voice.py "$EP" public props.json
+          npx remotion render src/index.ts Explainer out/video.mp4 --props=props.json --concurrency=4 --crf=18
+          npx remotion still src/index.ts Thumbnail out/thumb.png --props=props.json || true
+          [ -f out/thumb.png ] && ffmpeg -y -loglevel error -i out/thumb.png -q:v 3 out/thumb.jpg
+          N="scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,format=yuv420p"
+          A="aresample=48000,aformat=channel_layouts=stereo"
+          ffmpeg -y -loglevel error -i brand/intro.mp4 -i out/video.mp4 -i brand/outro.mp4 -filter_complex \
+            "[0:v]$N[v0];[1:v]$N[v1];[2:v]$N[v2];[0:a]$A[a0];[1:a]$A[a1];[2:a]$A[a2];[v0][a0][v1][a1][v2][a2]concat=n=3:v=1:a=1[v][a]" \
+            -map "[v]" -map "[a]" -c:v libx264 -crf 19 -preset medium -c:a aac -b:a 192k -movflags +faststart out/video_final.mp4
+      - name: Upload to YouTube
+        if: steps.ep.outputs.ep != ''
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          COURSE_PUBLISH_NOW: ${{ inputs.publish_now && '1' || '0' }}
+        run: |
+          EP=${{ steps.ep.outputs.ep }}
+          python -m pipeline.course upload "$EP" "blend/studio/explainer/episodes/$EP" blend/studio/explainer/out
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/course.json && git commit -qm "Course: uploaded $EP [skip ci]"
+          for i in 1 2 3 4; do git pull --rebase -q origin main && git push -q && exit 0; sleep $((i*5)); done
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.ep.outputs.ep != ''
+        with: {name: chapter, retention-days: 7, path: "blend/studio/explainer/out/video_final.mp4"}

@@ -1,0 +1,56 @@
+"""Course chapters (hand-written lessons rendered from the blend repo) -> YouTube.
+
+python -m pipeline.course next            prints the next episode file to render (or nothing)
+python -m pipeline.course upload EP DIR   uploads DIR/video_final.mp4 (+ DIR/thumb.jpg), adds it to
+                                          the episode's playlist, records it in state/course.json
+One chapter a day: each upload is scheduled at COURSE_TIME (IST, default 19:30) on the day after
+the last scheduled chapter. COURSE_PUBLISH_NOW=1 makes this one public at once.
+"""
+import datetime as dt, json, os, sys
+from pathlib import Path
+from pipeline import youtube_upload as yt
+
+STATE = Path("state/course.json")
+IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
+
+
+def load():
+    return json.loads(STATE.read_text()) if STATE.exists() else {"done": {}, "last_slot": None}
+
+
+def next_episode(order: Path) -> str:
+    done = load()["done"]
+    return next((e for e in json.loads(order.read_text()) if e not in done), "")
+
+
+def slot(state) -> dt.datetime:
+    hh, mm = map(int, (os.getenv("COURSE_TIME") or "19:30").split(":"))
+    now = dt.datetime.now(IST)
+    day = now.date()
+    if state.get("last_slot"):
+        day = max(day, dt.datetime.fromisoformat(state["last_slot"]).date() + dt.timedelta(days=1))
+    s = dt.datetime.combine(day, dt.time(hh, mm), IST)
+    return s if s - now > dt.timedelta(minutes=40) else s + dt.timedelta(days=1)
+
+
+def upload(ep: str, ep_path: Path, d: Path):
+    state = load()
+    meta = json.loads(ep_path.read_text())["yt"]
+    os.environ["YT_PRIVACY"] = "public"
+    when = None if os.getenv("COURSE_PUBLISH_NOW") == "1" else slot(state)
+    thumb = d / "thumb.jpg"
+    vid = yt.upload(d / "video_final.mp4", thumb if thumb.exists() else None, meta, publish_at=when)
+    yt.add_to_playlist(vid, meta.get("playlist") or "Network Theory")
+    state["done"][ep] = {"id": vid, "publish": (when or dt.datetime.now(IST)).isoformat()}
+    state["last_slot"] = (when or dt.datetime.now(IST)).isoformat()
+    STATE.parent.mkdir(exist_ok=True)
+    STATE.write_text(json.dumps(state, indent=1))
+    print(f"https://youtu.be/{vid} publish={state['last_slot']}")
+
+
+if __name__ == "__main__":
+    import logging; logging.basicConfig(level=logging.INFO)
+    if sys.argv[1] == "next":
+        print(next_episode(Path(sys.argv[2])))
+    else:
+        upload(sys.argv[2], Path(sys.argv[3]), Path(sys.argv[4]))
