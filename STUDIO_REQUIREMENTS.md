@@ -19,6 +19,8 @@ These rules are given to the lesson writer AI and the reviewer AI for EVERY vide
    and ending play over the lesson's main animation; lists and recaps become animated diagrams.
 5b. The animation keeps changing as the explanation moves on: a new visual for every new idea, part or step
    (about every 8-15 seconds), constant gentle camera motion, never one picture held for long.
+   EXCEPTION: the main concept animation (e.g. the filter circuit with the live oscilloscope, cycle by
+   cycle) stays on screen as long as the concept needs - that is what the viewer must watch.
 6. Videos are long and detailed (5-10 minutes). Never summarise the script into tiny scenes.
 7. No questions / quiz for now.
 8. 100% accurate: every fact, number, formula, direction of current, command and menu path is correct.

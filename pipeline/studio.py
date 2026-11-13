@@ -253,7 +253,10 @@ def normalize(ep: dict, final_pass: bool = False) -> dict:
     split = []
     for x in out:
         words = (x.get("narration") or "").split()
-        if len(words) > 45 and x.get("type") not in ("lab-title", "lab-outro", "question", "cover"):
+        # the main concept animations (circuit + scope, capacitor, code, sorting, network) stay on screen
+        # while the concept is explained in full - only general pictures are split
+        if len(words) > 45 and x.get("type") not in ("lab-title", "lab-outro", "question", "cover", "rectifier", "wave",
+                                                      "capacitor", "code", "array", "network", "terminal", "screen", "installer"):
             sents = re.findall(r"[^.!?]+[.!?]+", x["narration"]) or [x["narration"]]
             half, acc, a = len(words) / 2, 0, []
             for k2, st in enumerate(sents):
