@@ -1,10 +1,11 @@
 name: Course chapter
 
 # Renders the next chapter listed in gptk755blend/studio/explainer/episodes/network/order.json
-# (with the channel intro/outro) and uploads it to the "Network Theory" playlist, scheduled one a day.
+# (theory chapters, then the numericals). A reviewer AI checks it first; it is rendered with the channel
+# intro/outro and uploaded to its playlist, scheduled one chapter a day (7:30 PM IST).
 on:
   schedule:
-    - cron: "41 3 * * *"
+    - cron: "41 */6 * * *"
   workflow_dispatch:
     inputs:
       publish_now:
@@ -28,9 +29,14 @@ jobs:
       - name: Next chapter
         id: ep
         run: |
-          pip install -q python-dotenv google-api-python-client google-auth
+          pip install -q python-dotenv google-api-python-client google-auth httpx
           e=$(python -m pipeline.course next blend/studio/explainer/episodes/network/order.json)
           echo "ep=$e" >> $GITHUB_OUTPUT; echo "next: ${e:-none}"
+      - name: Reviewer AI checks the chapter (stops on any critical mistake)
+        if: steps.ep.outputs.ep != ''
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+        run: python -m pipeline.course_review "blend/studio/explainer/episodes/${{ steps.ep.outputs.ep }}"
       - uses: actions/setup-node@v4
         if: steps.ep.outputs.ep != ''
         with: {node-version: 22}
