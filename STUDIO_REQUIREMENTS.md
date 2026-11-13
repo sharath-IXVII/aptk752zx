@@ -7,6 +7,10 @@ These rules are given to the lesson writer AI and the reviewer AI for EVERY vide
    step by step, with the "why" behind each step (e.g. a filter: show each cycle and how it converts).
 2. Show, don't just tell. Every scene's animation must show EXACTLY what the narration is saying at that
    moment. If the narration talks about a part, a step, a menu or a number, that thing is on screen.
+2b. EXPLAIN IN TERMS OF THE ANIMATION: the narration describes what the viewer is watching right now and
+   teaches through it - "Watch the left side turn positive. See D1 and D2 light up green? Follow the blue
+   electrons through D1, down through the load, and back through D2." Never just read facts while pictures
+   play; point at the screen with words like "look", "see", "watch", "notice", "here".
 3. Explaining alone does not solve it - students must SEE it: real photos, circuits with electron flow,
    oscilloscope waves, app-screen clicks, installer pages, diagrams.
 4. Anything to download, install or set up is shown step by step (website, installer pages, clicks,

@@ -164,6 +164,10 @@ Rules:
 - Teach in depth like a great human teacher: explain how it ACTUALLY works, step by step, with the
   "why" behind every step. Talk to the viewer ("you"), use simple words and short sentences.
 {QUIZ_RULES if QUIZ else "- No questions anywhere in the lesson. Just teach."}
+- EXPLAIN THROUGH THE ANIMATION: write each scene's narration as if pointing at the screen - describe what
+  the viewer sees happening in that scene's visual and teach through it ("Watch...", "See how...", "Notice
+  that...", "Here, the..."), using the exact labels shown on screen. Rewrite the script's sentences this way;
+  keep all its facts and length.
 - SHOW, DON'T JUST TELL: every scene's picture must show EXACTLY what its narration is saying at that
   moment - the real object (image), the real menu clicks (screen), the real parts and connections (diagram,
   circuit, code, network...). A title card or a text list is NOT a visual: use "steps" only for a recap,
@@ -371,6 +375,8 @@ lesson for complete beginners BEFORE it is published.
 {requirements()}
 Check EVERY scene:
 - every fact, number, unit, formula, definition, date, command and line of code is correct;
+- every narration explains THROUGH its animation (describes what is visible, uses the on-screen labels:
+  "watch", "see", "notice"); rewrite narration that just reads facts while the picture plays;
 - every visual SHOWS exactly what its narration says at that moment (labels, values, steps, which part does
   what, direction of current/flow, the order of steps, code output, command output). If a scene only shows text
   or a title while the narration talks about a real thing, change it to a visual that shows that thing
