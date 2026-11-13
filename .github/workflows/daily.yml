@@ -50,7 +50,7 @@ jobs:
       - run: pip install -r requirements.txt && python -m playwright install --with-deps chromium
         if: steps.check.outputs.skip != 'true' || inputs.force
       - name: NotebookLM login
-        continue-on-error: true   # not needed by GetYr Studio
+        continue-on-error: false
         if: steps.check.outputs.skip != 'true' || inputs.force
         env:
           NOTEBOOKLM_AUTH_JSON: ${{ secrets.NOTEBOOKLM_AUTH_JSON }}
@@ -81,7 +81,7 @@ jobs:
           META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
           META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
           GH_TOKEN: ${{ github.token }}   # temporary public link for the Reels
-          YT_PRIVACY: ${{ vars.YT_PRIVACY || 'private' }}   # private while GetYr Studio is being perfected on ECE
+          YT_PRIVACY: ${{ vars.YT_PRIVACY || 'public' }}
           YT_PUBLISH_TIMES: ${{ vars.YT_PUBLISH_TIMES }}
           VIDEOS_PER_DAY: ${{ vars.VIDEOS_PER_DAY }}
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
@@ -95,7 +95,7 @@ jobs:
           WATERMARK_SITE: ${{ vars.WATERMARK_SITE }}
           THUMBNAIL_AT: ${{ vars.THUMBNAIL_AT }}
           VIDEO_LANGUAGE: en
-          VIDEO_ENGINE: ${{ vars.VIDEO_ENGINE || 'studio' }}
+          VIDEO_ENGINE: ${{ vars.VIDEO_ENGINE || 'notebooklm' }}
           SEARCH_DOMAIN: ece
         run: |
           set -o pipefail
