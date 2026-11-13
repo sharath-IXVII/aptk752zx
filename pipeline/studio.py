@@ -15,6 +15,7 @@ import os
 import re
 import shutil
 import subprocess
+import time
 import sys
 from pathlib import Path
 
@@ -379,8 +380,15 @@ def fetch_images(ep: dict, work: Path) -> list[str]:
                 lic = (md.get("LicenseShortName", {}).get("value") or "").lower()
                 if not any(x in lic for x in OK_LICENSES) or ii.get("width", 0) < 800:
                     continue
-                img = httpx.get(ii.get("thumburl") or ii["url"], timeout=60, headers={"User-Agent": "GetYrStudio/1.0"}, follow_redirects=True)
-                img.raise_for_status()
+                img = None
+                for wait in (0, 4, 10, 20):  # Wikimedia asks for polite, slow downloads
+                    time.sleep(wait + 1.5)
+                    img = httpx.get(ii.get("thumburl") or ii["url"], timeout=60, follow_redirects=True,
+                                    headers={"User-Agent": "GetYrStudio/1.0 (https://github.com/sharath-IXVII; educational videos)"})
+                    if img.status_code != 429:
+                        break
+                if img is None or img.status_code >= 400:
+                    continue
                 n += 1; name = f"img/{n}.jpg"; (work / "public" / name).write_bytes(img.content)
                 artist = re.sub(r"<[^>]+>", "", md.get("Artist", {}).get("value") or "Wikimedia Commons").strip()[:60]
                 sc["src"] = name; sc["credit"] = f"{artist} / {md.get('LicenseShortName', {}).get('value', '')}"
