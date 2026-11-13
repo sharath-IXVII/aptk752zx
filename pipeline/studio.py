@@ -24,7 +24,15 @@ from pipeline import llm
 log = logging.getLogger(__name__)
 STUDIO = Path(__file__).resolve().parent.parent / "studio" / "explainer"
 REVIEWER_MODEL = os.getenv("REVIEWER_MODEL") or "deepseek-ai/deepseek-v4.1-flash"
-QUIZ = (os.getenv("STUDIO_QUIZ") or "off") == "on"   # questions are switched off for now
+QUIZ = (os.getenv("STUDIO_QUIZ") or "off") == "on"
+REQ_FILE = Path(__file__).resolve().parent.parent / "STUDIO_REQUIREMENTS.md"
+
+
+def requirements() -> str:
+    try:
+        return "\nTHE CHANNEL OWNER'S REQUIREMENTS (follow every one):\n" + REQ_FILE.read_text()[:5000]
+    except Exception:
+        return ""   # questions are switched off for now
 
 COMMON = {
     "lab-title": 'opening card: {"kicker": "GETYR · <CHANNEL>", "title": "SHORT TITLE IN CAPS", "subtitle": "one line"}',
@@ -142,6 +150,7 @@ def _write_once(script: dict, meta: dict, attempt: int, need: int = 600) -> dict
     d = _domain()
     ep = llm.chat_json(f"""You are the lead teacher and animation director of a YouTube channel about {d["about"]}.
 Viewers are beginners who know nothing about this topic. Turn this narration into an animated LESSON.
+{requirements()}
 {"For this NEWS channel: tell it as the STORY of what actually happened, in time order, like a gripping animated story - who, where, when (show it in the HUD), what people saw on their phones, how the numbers moved, then WHY, then what it means and what happens next. Start with a 'stamp' BREAKING scene. Mostly use story/phone/chart/stamp scenes. Only real facts." if d.get("story") else ""}
 
 TITLE: {meta.get("title")}
@@ -268,6 +277,33 @@ def normalize(ep: dict, final_pass: bool = False) -> dict:
     return ep
 
 
+_SHOWN_FIELDS = ("title", "label", "query", "items", "nodes", "notes", "parts", "steps", "lines", "path", "pages", "app",
+                 "formula", "terms", "code", "figures", "bubble", "text", "sub", "q", "options", "values")
+_FILLER = set("this that with from into your have will what when then they them their there here about which would could "
+              "should also just very more most much many some each every like make made does doing been were where while".split())
+
+
+def _shown_words(sc: dict) -> set:
+    out = []
+    def walk(x):
+        if isinstance(x, str): out.append(x)
+        elif isinstance(x, dict): [walk(v) for v in x.values()]
+        elif isinstance(x, list): [walk(v) for v in x]
+    for k in _SHOWN_FIELDS:
+        walk(sc.get(k))
+    return {w for w in re.findall(r"[a-z]{4,}", " ".join(out).lower())} - _FILLER
+
+
+def mismatch(sc: dict) -> bool:
+    """True when nothing on screen relates to what is being said (no shared key word).
+    Scenes whose visual is a fixed simulation (rectifier, wave, capacitor) are judged by the reviewer instead."""
+    if sc.get("type") in ("rectifier", "wave", "capacitor", "lab-title", "lab-outro", "cover", "stamp"):
+        return False
+    said = {w for w in re.findall(r"[a-z]{4,}", (sc.get("narration") or "").lower())} - _FILLER
+    shown = _shown_words(sc)
+    return bool(said) and bool(shown) and not (said & shown or any(a[:5] == b[:5] for a in said for b in shown))
+
+
 def check_episode(ep: dict) -> list[str]:
     """Problems we can find without an AI. Also corrects code output to the real output."""
     d = _domain(); allowed = set(COMMON) | set(d["scenes"])
@@ -285,6 +321,9 @@ def check_episode(ep: dict) -> list[str]:
         for k in REQUIRED.get(t, []):
             if not s.get(k):
                 problems.append(f"scene {i} ({t}): '{k}' is missing")
+        if mismatch(s):
+            problems.append(f"scene {i} ({t}): the picture does not show what the narration says - change the visual "
+                            "so it shows exactly the thing being talked about")
         if t == "question" and not s.get("reveal") and not s.get("answer"):
             problems.append(f"scene {i} (question): 'answer' and 'why' are missing - add the correct answer")
         if t == "code" and s.get("lang", "python") == "python" and s.get("code"):
@@ -328,7 +367,9 @@ def review_episode(ep: dict, lessons: str = "") -> dict:
         problems = check_episode(ep)
         try:
             r = llm.chat_json(f"""You are a strict senior professor and engineer in {d["about"]}, reviewing an animated
-lesson for complete beginners BEFORE it is published. Check EVERY scene:
+lesson for complete beginners BEFORE it is published.
+{requirements()}
+Check EVERY scene:
 - every fact, number, unit, formula, definition, date, command and line of code is correct;
 - every visual SHOWS exactly what its narration says at that moment (labels, values, steps, which part does
   what, direction of current/flow, the order of steps, code output, command output). If a scene only shows text
@@ -373,7 +414,10 @@ Use "reject" only if the topic cannot be taught correctly.""",
             log.info("Reviewer %d: lesson approved", rnd)
             break
     normalize(ep, final_pass=True)
-    left = [p for p in check_episode(ep) if "answer" not in p and "question scenes" not in p]
+    left = [p for p in check_episode(ep) if "answer" not in p and "question scenes" not in p and "does not show" not in p]
+    still = sum("does not show" in p for p in check_episode(ep))
+    if still:
+        log.warning("%d scenes may still not match their narration after review", still)
     if left:
         raise RuntimeError("Lesson still has problems after review: " + "; ".join(left[:4]))
     return ep
