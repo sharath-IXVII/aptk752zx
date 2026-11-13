@@ -13,21 +13,47 @@ from pipeline import llm
 
 REVIEWER_MODEL = os.getenv("REVIEWER_MODEL") or "deepseek-ai/deepseek-v4.1-flash"
 
+SCENES = """WHAT EACH SCENE TYPE DRAWS (all of this IS on screen - never ask to "verify" it):
+- dc: a circuit (battery v, resistors r[], series/parallel) with electrons moving; show "current" = ammeter
+  reading (computed V/R), "voltage" = a voltmeter on each resistor, "heat" = resistor glow; v_to sweeps the voltage.
+- inside: zoom into a material: atoms + drifting electrons that visibly collide (mode wire/resistor/insulator/no-voltage).
+- atom: Bohr-style atom with nucleus and electron shells. water: two tanks + pipe (voltage analogy).
+- ohm: live I-vs-V graph (V on x-axis, I on y-axis) with one labelled line per resistor.
+- formula: the formula in big text, each term with its meaning, and the example lines.
+- bars: labelled horizontal bars with values. steps: numbered list. diagram: labelled boxes with arrows; steps highlight boxes.
+- resistor: mode bands = resistor body with the listed colour bands, each band labelled (colour, digit/multiplier/tolerance)
+  and the final value; cutaway = leads, end caps, ceramic core, carbon film, spiral cut, coating, each labelled;
+  pot = potentiometer knob, wiper, live resistance value and a lamp whose brightness follows the current.
+- capacitor: two plates, dielectric, charges piling up, % stored. rc: RC circuit + live Vc/I meters + exponential graph with 1τ mark.
+- capgeom: plates growing / moving closer / dielectric sliding in with a capacitance bar.
+- coil: field = coil with growing magnetic field loops and current value; magnet = magnet moving in/out of a coil with a meter needle.
+- rl: RL circuit with switch, current meter and graph; off = switch opens with a spark.
+- source: ideal/practical voltage or current source with a shrinking load, live meters and a V-I graph.
+- net: one example circuit (battery + R1..R4) highlighting nodes / branches / loops / meshes, or open / short.
+- kcl: a node with labelled currents in/out and an In = Out tally. kvl: a marker walking a loop with a running sum of rises and drops.
+- wave: oscilloscope with AC input and (cap=true) smoothed output with ripple. lab-title / lab-outro: title and next-part cards."""
+
 REVIEW = """You are a strict senior professor of Electronics & Communication Engineering reviewing a
 beginner video lesson before it is published. Students know NOTHING. Each scene is an animation
-(its "type" and fields decide what is drawn: numbers in fields are what appears on screen) plus
-the "narration" spoken over it. Check every scene:
-1. Facts, numbers, formulas, units, directions, component behaviour: 100% correct?
-2. Narration matches what the animation fields show (same values, same names, same order)?
-3. Every new term explained before or when it is used? Smooth bridge from the previous topic?
-4. Anything important for students missing from this topic?
-Report only REAL problems. "critical" = wrong or misleading or mismatched with the screen;
-"minor" = clarity/flow. Reply JSON only:
+(its "type" and fields decide what is drawn) plus the "narration" spoken over it.
+
+""" + SCENES + """
+
+Report ONLY real problems you are SURE about:
+- "critical": a fact, number, formula, unit or direction that is WRONG, or narration that contradicts
+  the scene's fields (different value/name/order). You must be able to state the exact wrong statement
+  and the exact correct one.
+- "minor": a genuinely confusing or missing explanation for a beginner.
+NEVER report something you checked and found correct. NEVER ask to "verify", "ensure" or "confirm"
+the animation - the list above tells you exactly what is drawn. Simplifications that are standard in
+beginner teaching are fine. If the lesson is correct, return an empty issues list.
+Reply JSON only:
 {"issues":[{"scene":<index>,"severity":"critical|minor","problem":"...","fix":"..."}],"missing":["..."]}"""
 
 FIX = """You are the same professor. Fix the listed problems in these scenes. Return the corrected
 scenes as JSON: {"scenes":{"<index>": <full corrected scene object>}}.
-Rules: keep "type" and "chapter" unchanged; keep the same field names; change only what is needed;
+Rules: keep "type" and "chapter" unchanged; keep the same field names and do not add new fields
+(the animation cannot show captions or anything not listed); change only what is needed;
 narration stays clear, friendly and spoken (no markdown), explaining through the animation
 ("watch", "see", "notice"); numbers in narration must match the fields."""
 
