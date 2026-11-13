@@ -23,6 +23,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with: {repository: sharath11yr/gptk755blend, path: blend}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
       - name: Next chapter
         id: ep
         run: |
