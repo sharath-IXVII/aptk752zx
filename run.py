@@ -291,6 +291,9 @@ async def upload_short(state: dict, episode: Path, short_raw: Path, meta: dict,
             log.warning("YouTube Short skipped: %s", exc)
     else:
         log.info("YouTube Shorts limit for today reached - Short goes to Reels only")
+    if (os.getenv("YT_PRIVACY") or "public") == "private":
+        log.info("Private test video - no Instagram Reel")
+        return
     # Reels are posted right away (nothing kept waiting); the temporary link is deleted after.
     social.queue_short(state, short, meta, video_id, None)
     social.publish_due(state)

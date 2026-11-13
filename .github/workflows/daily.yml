@@ -81,7 +81,7 @@ jobs:
           META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
           META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
           GH_TOKEN: ${{ github.token }}   # temporary public link for the Reels
-          YT_PRIVACY: ${{ vars.YT_PRIVACY || 'public' }}
+          YT_PRIVACY: ${{ vars.YT_PRIVACY || 'private' }}   # private while GetYr Studio is being perfected on ECE
           YT_PUBLISH_TIMES: ${{ vars.YT_PUBLISH_TIMES }}
           VIDEOS_PER_DAY: ${{ vars.VIDEOS_PER_DAY }}
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
