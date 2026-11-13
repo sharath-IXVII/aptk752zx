@@ -14,7 +14,7 @@ on:
         default: false
 
 concurrency: {group: course, cancel-in-progress: false}
-permissions: {contents: write}
+permissions: {contents: write, issues: write}
 
 jobs:
   chapter:
@@ -32,7 +32,8 @@ jobs:
           pip install -q python-dotenv google-api-python-client google-auth httpx
           e=$(python -m pipeline.course next blend/studio/explainer/episodes/network/order.json)
           echo "ep=$e" >> $GITHUB_OUTPUT; echo "next: ${e:-none}"
-      - name: Reviewer AI checks the chapter (stops on any critical mistake)
+      - name: Reviewer AI checks and fixes the chapter (stops only if it cannot fix it)
+        id: review
         if: steps.ep.outputs.ep != ''
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
@@ -70,6 +71,21 @@ jobs:
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add state/course.json && git commit -qm "Course: uploaded $EP [skip ci]"
           for i in 1 2 3 4; do git pull --rebase -q origin main && git push -q && exit 0; sleep $((i*5)); done
+      - name: Email the owner if the reviewer could not fix the chapter
+        if: failure() && steps.review.outcome == 'failure'
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          { echo "The reviewer AI found mistakes in **${{ steps.ep.outputs.ep }}** that it could not fix, so this chapter was NOT uploaded."; echo; echo '```'; cat review_failed.txt 2>/dev/null; echo '```'; echo; echo "Full log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"; } > body.md
+          python -m pipeline.course block "${{ steps.ep.outputs.ep }}"
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/course.json && git commit -qm "Course: ${{ steps.ep.outputs.ep }} paused for a fix [skip ci]" && for i in 1 2 3 4; do git pull --rebase -q origin main && git push -q && break; sleep $((i*5)); done
+          gh issue create -R ${{ github.repository }} --title "Course chapter needs a fix: ${{ steps.ep.outputs.ep }}" --body-file body.md --assignee ${{ github.repository_owner }} || gh issue create -R ${{ github.repository }} --title "Course chapter needs a fix: ${{ steps.ep.outputs.ep }}" --body-file body.md
       - uses: actions/upload-artifact@v4
         if: always() && steps.ep.outputs.ep != ''
-        with: {name: chapter, retention-days: 7, path: "blend/studio/explainer/out/video_final.mp4"}
+        with:
+          name: chapter
+          retention-days: 7
+          if-no-files-found: ignore
+          path: |
+            blend/studio/explainer/out/video_final.mp4
+            review_log.txt

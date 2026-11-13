@@ -19,7 +19,10 @@ def load():
 
 
 def next_episode(order: Path) -> str:
-    done = load()["done"]
+    st = load()
+    if st.get("blocked"):  # a chapter the reviewer could not fix: wait for the owner, keep the order
+        return ""
+    done = st["done"]
     return next((e for e in json.loads(order.read_text()) if e not in done), "")
 
 
@@ -50,7 +53,9 @@ def upload(ep: str, ep_path: Path, d: Path):
 
 if __name__ == "__main__":
     import logging; logging.basicConfig(level=logging.INFO)
-    if sys.argv[1] == "next":
+    if sys.argv[1] == "block":
+        st = load(); st["blocked"] = sys.argv[2]; STATE.parent.mkdir(exist_ok=True); STATE.write_text(json.dumps(st, indent=1))
+    elif sys.argv[1] == "next":
         print(next_episode(Path(sys.argv[2])))
     else:
         upload(sys.argv[2], Path(sys.argv[3]), Path(sys.argv[4]))
