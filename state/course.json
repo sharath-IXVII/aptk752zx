@@ -9,5 +9,6 @@
    "publish": "2026-11-14T19:30:00+05:30"
   }
  },
- "last_slot": "2026-11-14T19:30:00+05:30"
+ "last_slot": "2026-11-14T19:30:00+05:30",
+ "blocked": "network/p2_capacitor.json"
 }
