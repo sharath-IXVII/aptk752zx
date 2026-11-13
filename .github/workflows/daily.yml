@@ -37,8 +37,8 @@ jobs:
       - name: Anything to do?
         id: check
         env:
-          VIDEOS_PER_DAY: ${{ vars.VIDEOS_PER_DAY }}
-          YT_PUBLISH_TIMES: ${{ vars.YT_PUBLISH_TIMES }}
+          VIDEOS_PER_DAY: "3"   # 3 NotebookLM videos a day (+1 course chapter, +2 Shorts)
+          YT_PUBLISH_TIMES: "12:00,15:00,18:00"
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
         run: python3 pipeline/plan.py >> "$GITHUB_OUTPUT" && cat "$GITHUB_OUTPUT"
       - uses: actions/setup-python@v5
@@ -82,8 +82,8 @@ jobs:
           META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
           GH_TOKEN: ${{ github.token }}   # temporary public link for the Reels
           YT_PRIVACY: ${{ vars.YT_PRIVACY || 'public' }}
-          YT_PUBLISH_TIMES: ${{ vars.YT_PUBLISH_TIMES }}
-          VIDEOS_PER_DAY: ${{ vars.VIDEOS_PER_DAY }}
+          YT_PUBLISH_TIMES: "12:00,15:00,18:00"
+          VIDEOS_PER_DAY: "3"   # 3 NotebookLM videos a day (+1 course chapter, +2 Shorts)
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
           YT_CATEGORY: ${{ vars.YT_CATEGORY }}
           WATERMARK_BOX: ${{ vars.WATERMARK_BOX }}
