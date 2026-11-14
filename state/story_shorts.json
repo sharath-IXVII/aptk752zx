@@ -7,7 +7,11 @@
   "shorts/s_p1_resistor.json": {
    "id": "tJIgs-WPJ20",
    "publish": "2026-11-15T10:00:00+05:30"
+  },
+  "shorts/s_p2_capacitor.json": {
+   "id": "0CoGO07v-58",
+   "publish": "2026-11-15T17:00:00+05:30"
   }
  },
- "last_slot": "2026-11-15T10:00:00+05:30"
+ "last_slot": "2026-11-15T17:00:00+05:30"
 }
