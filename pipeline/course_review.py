@@ -31,7 +31,7 @@ SCENES = """WHAT EACH SCENE TYPE DRAWS (all of this IS on screen - never ask to 
 - source: ideal/practical voltage or current source with a shrinking load, live meters and a V-I graph.
 - net: one example circuit (battery + R1..R4) highlighting nodes / branches / loops / meshes, or open / short.
 - kcl: a node with labelled currents in/out and an In = Out tally. kvl: a marker walking a loop with a running sum of rises and drops.
-- wave: oscilloscope with AC input and (cap=true) smoothed output with ripple. lab-title / lab-outro: title and next-part cards."""
+- stick: the mascot Volt (pose, speech bubble "say", optional "card" text, optional circuit prop) - a story character.\n- wave: oscilloscope with AC input and (cap=true) smoothed output with ripple. lab-title / lab-outro: title and next-part cards."""
 
 REVIEW = """You are a strict senior professor of Electronics & Communication Engineering reviewing a
 beginner video lesson before it is published. Students know NOTHING. Each scene is an animation
@@ -58,27 +58,31 @@ narration stays clear, friendly and spoken (no markdown), explaining through the
 ("watch", "see", "notice"); numbers in narration must match the fields."""
 
 
+def _key(ep: dict) -> str:
+    return "scenes" if ep.get("scenes") else "short_scenes"
+
+
 def review(ep: dict) -> dict:
-    scenes = [{"i": i, **s} for i, s in enumerate(ep["scenes"])]
+    scenes = [{"i": i, **s} for i, s in enumerate(ep[_key(ep)])]
     return llm.chat_json(f"Lesson: {ep['title']}\n\nScenes:\n{json.dumps(scenes, ensure_ascii=False)}",
                          system=REVIEW, temperature=0.1, max_tokens=4000, prefer=REVIEWER_MODEL)
 
 
 def fix(ep: dict, issues: list) -> int:
-    idx = sorted({int(i["scene"]) for i in issues if str(i.get("scene", "")).isdigit() and int(i["scene"]) < len(ep["scenes"])})
+    idx = sorted({int(i["scene"]) for i in issues if str(i.get("scene", "")).isdigit() and int(i["scene"]) < len(ep[_key(ep)])})
     if not idx:
         return 0
-    ask = {"problems": issues, "scenes": {str(i): ep["scenes"][i] for i in idx}}
+    ask = {"problems": issues, "scenes": {str(i): ep[_key(ep)][i] for i in idx}}
     out = llm.chat_json(json.dumps(ask, ensure_ascii=False), system=FIX, temperature=0.2,
                         max_tokens=6000, prefer=REVIEWER_MODEL).get("scenes", {})
     n = 0
     for k, new in out.items():
         i = int(k)
-        old = ep["scenes"][i]
+        old = ep[_key(ep)][i]
         if not isinstance(new, dict) or new.get("type") != old["type"] or not new.get("narration"):
             continue
         new["chapter"] = old.get("chapter", new.get("chapter"))
-        ep["scenes"][i] = {**old, **new}
+        ep[_key(ep)][i] = {**old, **new}
         n += 1
     return n
 
@@ -94,7 +98,7 @@ def confirmed(ep: dict, issue: dict) -> bool:
     """A second, independent model must confirm a critical mistake before it can stop a chapter."""
     try:
         i = int(issue.get("scene"))
-        scene = ep["scenes"][i]
+        scene = ep[_key(ep)][i]
     except (TypeError, ValueError, IndexError):
         return False
     try:

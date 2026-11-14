@@ -1,0 +1,63 @@
+name: Story Shorts
+
+# Volt story Shorts for the Network Theory playlist (gptk755blend/studio/explainer/episodes/shorts/order.json).
+# Reviewer AI checks each one, then it is rendered (vertical, < 60 s) and scheduled: 2 a day, 10:00 and 17:00 IST.
+on:
+  schedule:
+    - cron: "11 */8 * * *"
+  workflow_dispatch:
+
+concurrency: {group: story-shorts, cancel-in-progress: false}
+permissions: {contents: write}
+
+jobs:
+  short:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: {repository: sharath11yr/gptk755blend, path: blend}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Next Short
+        id: ep
+        run: |
+          pip install -q python-dotenv google-api-python-client google-auth httpx
+          git pull -q --rebase origin main || true
+          e=$(python -m pipeline.story_shorts next blend/studio/explainer/episodes/shorts/order.json)
+          echo "ep=$e" >> $GITHUB_OUTPUT; echo "next: ${e:-none}"
+      - name: Reviewer AI checks the Short
+        if: steps.ep.outputs.ep != ''
+        env: {NVIDIA_API_KEY: "${{ secrets.NVIDIA_API_KEY }}"}
+        run: python -m pipeline.course_review "blend/studio/explainer/episodes/${{ steps.ep.outputs.ep }}"
+      - uses: actions/setup-node@v4
+        if: steps.ep.outputs.ep != ''
+        with: {node-version: 22}
+      - name: Render the Short
+        if: steps.ep.outputs.ep != ''
+        working-directory: blend/studio/explainer
+        run: |
+          npm ci || npm install
+          sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng ffmpeg
+          pip install -q edge-tts "kokoro>=0.9.4" soundfile
+          python voice.py "episodes/${{ steps.ep.outputs.ep }}" public props.json
+          npx remotion render src/index.ts Short out/short.mp4 --props=props_short.json --concurrency=4 --crf=18
+          d=$(ffprobe -v error -show_entries format=duration -of csv=p=0 out/short.mp4); echo "duration $d s"
+          if python -c "import sys; sys.exit(0 if float('$d') > 59 else 1)"; then
+            r=$(python -c "print(min(1.25, float('$d')/58))")
+            ffmpeg -y -loglevel error -i out/short.mp4 -filter_complex "[0:v]setpts=PTS/$r[v];[0:a]atempo=$r[a]" -map "[v]" -map "[a]" -c:v libx264 -crf 19 -c:a aac out/short_fit.mp4
+            mv out/short_fit.mp4 out/short.mp4
+          fi
+      - name: Upload
+        if: steps.ep.outputs.ep != ''
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          EP=${{ steps.ep.outputs.ep }}
+          python -m pipeline.story_shorts upload "$EP" "blend/studio/explainer/episodes/$EP" blend/studio/explainer/out/short.mp4
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/story_shorts.json && git commit -qm "Story Short: $EP [skip ci]"
+          for i in 1 2 3 4; do git pull --rebase -q origin main && git push -q && exit 0; sleep $((i*5)); done
