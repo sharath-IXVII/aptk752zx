@@ -7,7 +7,11 @@
   "network/p1_resistor.json": {
    "id": "FTeYDq5F9-Q",
    "publish": "2026-11-14T19:30:00+05:30"
+  },
+  "network/p2_capacitor.json": {
+   "id": "A3osq-XTf-Q",
+   "publish": "2026-11-15T19:30:00+05:30"
   }
  },
- "last_slot": "2026-11-14T19:30:00+05:30"
+ "last_slot": "2026-11-15T19:30:00+05:30"
 }
