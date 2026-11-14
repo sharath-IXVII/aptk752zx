@@ -23,7 +23,11 @@
   "network/p5_terms.json": {
    "id": "QMXd6lP7Xts",
    "publish": "2026-11-17T16:00:00+05:30"
+  },
+  "network/p6_ohm_power.json": {
+   "id": "J-ZX0k8tEiU",
+   "publish": "2026-11-17T19:30:00+05:30"
   }
  },
- "last_slot": "2026-11-17T16:00:00+05:30"
+ "last_slot": "2026-11-17T19:30:00+05:30"
 }
