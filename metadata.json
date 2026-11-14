@@ -1,0 +1,28 @@
+{
+  "title": "Network Theory Neso Academy: Thevenin's Theorem Simplify Any Circuit in 10 Minutes",
+  "cover_text": "THEVENIN'S THEOREM",
+  "short_hook": "Stop struggling with complex circuits today.",
+  "description": "Welcome to Neso Academy. If you are watching this video, you have likely struggled with understanding how to simplify complex electrical networks. Perhaps you have spent hours looking at a circuit with multiple resistors and voltage sources, feeling completely lost about where to start. Here is a precise concept: the art of circuit simplification using Thevenin's and Norton's Theorems is the single most important tool in network theory. Students often get stuck trying to calculate equivalent resistance or misapply the steps, leading to frustration. But by the end of this video, in exactly ten minutes, you will understand this concept perfectly. You will learn the step-by-step method to simplify any linear circuit, and you will never make the common mistakes that trip up the majority of learners. I am [Your Name], and welcome to Neso Academy. In this video: \n- The step-by-step method to simplify any linear circuit\n- How to find Thevenin voltage and resistance\n- The most common mistakes students make\n- A real example with a 12V source and resistors\n- How to reattach your load resistor to the equivalent circuit\nWhy do so many students fail at this? The most common mistake occurs at the third step, finding R_th. Students often forget to turn off the independent sources. They might leave the voltage source in the circuit, or they might forget to open the current source. This leads to an incorrect R_th, and the entire calculation fails. Are you someone who struggles with circuit analysis?\n\nAbout GetYr_ECE: how everyday electronics really work - chargers, fans, phones, chips and networks, accurately and in depth. New videos every day.\nSubscribe and turn on notifications so you never miss a video.\n\n#NetworkTheory #Electronics #Engineering #NetworkTheoryNesoAcademy #NetworkTheoryGateNesoAcademy #LaplaceTransformNetworkTheoryNesoAcademy #NesoAcademyNetworkTheoryChapter1 #NesoAcademyNetworkTheoryTheorems #NesoAcademyNetworkTheorySuperpositionTheorem #NesoAcademyNetworkTheorySourceTransformation #NesoAcademyNetworkTheoryNodalAnalysis #NesoAcademyNetworkTheoryAndAnalysis #NesoAcademyNetworkTheoryChapter3 #NesoAcademy #TheveninTheorem",
+  "hashtags": [
+    "#NetworkTheory",
+    "#Electronics",
+    "#Engineering"
+  ],
+  "tags": [
+    "network theory neso academy",
+    "network theory gate neso academy",
+    "laplace transform network theory neso academy",
+    "neso academy network theory chapter 1",
+    "neso academy network theory theorems",
+    "neso academy network theory superposition theorem",
+    "neso academy network theory source transformation",
+    "neso academy network theory nodal analysis",
+    "neso academy network theory and analysis",
+    "neso academy network theory chapter 3",
+    "network theory",
+    "neso academy",
+    "thevenin theorem",
+    "norton theorem"
+  ],
+  "playlist": "How Technology Works"
+}

@@ -1,0 +1,134 @@
+2026-11-14 04:03:38,358 INFO Already scheduled: ['2026-11-09T12:00:00+05:30', '2026-11-09T15:00:00+05:30', '2026-11-09T18:00:00+05:30', '2026-11-10T12:00:00+05:30', '2026-11-10T15:00:00+05:30', '2026-11-10T18:00:00+05:30', '2026-11-11T12:00:00+05:30', '2026-11-11T18:00:00+05:30', '2026-11-12T12:00:00+05:30', '2026-11-12T18:00:00+05:30', '2026-11-13T12:00:00+05:30', '2026-11-13T18:00:00+05:30', '2026-11-14T12:00:00+05:30', '2026-11-14T18:00:00+05:30', '2026-11-15T12:00:00+05:30', '2026-11-15T18:00:00+05:30', '2026-11-16T12:00:00+05:30', '2026-11-16T18:00:00+05:30']
+2026-11-14 04:03:44,345 INFO Channel winners: The Working of Filters | From Pulsating DC to Smoo (44717); Types of Filters in Electronics | Low Pass, High P (3876); What Is a Clipper? | How Does a Clipper Actually W (3699); What Is a Diode? | How does a diode actually works (2889); What are Voltage Regulators? 🔌 | Analog Electronic (2672); How Does a Zener Diode Actually Work? | Controlled (1999)
+2026-11-14 04:03:47,238 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:03:47,246 INFO Search-led topic: Mosfet Amplifier Circuit Analysis and Operation (targets 'amplifier imran khan')
+2026-11-14 04:03:47,910 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:03:47,910 INFO Skipping 'Mosfet Amplifier Circuit Analysis and Operation': the channel already has 'How a Diode Actually Works: From Basic Physics to Circuit Applications'
+2026-11-14 04:03:49,476 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:03:49,484 INFO Search-led topic: Electric Car Battery Fire Causes and Safety Risks (targets 'electric car battery fire')
+2026-11-14 04:03:49,820 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:03:49,820 INFO Skipping 'Electric Car Battery Fire Causes and Safety Risks': the channel already has 'How Batteries Work Chemistry: The Invisible Reactions Powering Your Phone'
+2026-11-14 04:03:51,217 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:03:51,219 INFO Search-led topic: network theory neso academy (targets 'network theory neso academy')
+2026-11-14 04:03:51,552 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:03:52,183 INFO Search demand for 'network theory neso academy': median 490,479 views of the top 10 results (want 50,000-1,000,000)
+2026-11-14 04:04:09,031 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:04:09,031 WARNING Draft unusable (0 words, on topic: False) - writing it again
+2026-11-14 04:04:21,761 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:04:21,761 WARNING Draft unusable (0 words, on topic: False) - writing it again
+2026-11-14 04:04:38,737 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:04:53,096 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:04:53,096 INFO Fact-check 1 fix: The script states that for a voltage source, you replace it with a short circuit, and for a current source, you replace it with an open circuit. It does not explicitly state that the arrow direction of a diode or the + side of an electrolytic capacitor must be shown, but more importantly, the example circuit description implies standard passive components. However, the critical error is in the 'Pro Tip' section regarding dependent sources. The script says: 'Apply a known test voltage source across the terminals, calculate the resulting current, and R_th is that test voltage divided by that test current.' While the formula V_test/I_test is correct for finding R_th with dependent sources, the script previously instructed the viewer to 'turn off all independent sources'. The error lies in the ambiguity or potential contradiction if not handled strictly, but the specific fix needed is ensuring the description of turning off sources is absolute for independent sources before introducing the test method. Also, the script mentions 'battery + and - correct' in the safety checks but the example uses a '12-volt voltage source'. The safety check regarding polarity orientation of the source in the diagram is implied but must be explicit.
+2026-11-14 04:04:53,096 INFO Fact-check 1 fix: The script describes the example: 'a 12-volt voltage source, a 100-ohm resistor in series, and a parallel combination of a 200-ohm and a 400-ohm resistor.' It then says: 'With the 400-ohm resistor removed, we have a 12-volt source, a 100-ohm resistor, and a 200-ohm resistor in series.' The error is the description of the original circuit topology. If the 200-ohm and 400-ohm are in parallel, and this combination is in series with the 100-ohm and 12V source, removing the 400-ohm resistor leaves the 200-ohm resistor still connected. The script says 'we have a 12-volt source, a 100-ohm resistor, and a 200-ohm resistor in series.' This is topologically incorrect if the 200-ohm was in parallel with the 400-ohm. If the 200-ohm is in parallel with the 400-ohm, removing the 400-ohm leaves the 200-ohm still in the circuit, but the voltage across the terminals would not simply be the voltage across the 200-ohm resistor unless the 200-ohm is the only path. The description of the example circuit is vague and potentially misleading regarding which resistors are in series/parallel.
+2026-11-14 04:04:53,096 INFO Fact-check 1 fix: The script states: 'The voltage across the open terminals is the voltage across the 200-ohm resistor.' If the 200-ohm resistor is in parallel with the 400-ohm load, removing the load changes the circuit. The script implies the 200-ohm is the resistor across which the voltage is measured, but the initial description 'parallel combination of a 200-ohm and a 400-ohm resistor' suggests they share the same nodes. If they share the same nodes, removing the 400-ohm leaves the 200-ohm connected across the source via the 100-ohm. The voltage across the terminals *is* the voltage across the 200-ohm, but the explanation 'Using voltage division, V_th equals 12 volts times 200 ohms divided by the sum of 100 ohms and 200 ohms' assumes the 200-ohm is in series with the 100-ohm. The script conflates a parallel configuration with a series voltage division calculation without clarifying the reconfiguration of the circuit upon load removal.
+2026-11-14 04:04:53,096 INFO Fact-check 1 fix: The script's 'Pro Tip' on dependent sources states: 'Apply a known test voltage source across the terminals, calculate the resulting current, and R_th is that test voltage divided by that test current.' It then says 'This is a crucial distinction that often appears in advanced exam questions.' However, it fails to mention that when using the test source method to find R_th with dependent sources, the independent sources must already be turned off. The script earlier said 'Third, find the Thevenin resistance R_th. This is the step most students get wrong. To find R_th, you must turn off all independent sources.' The error is that the 'Pro Tip' section introduces the test method but does not explicitly re-state that independent sources are off, which is a critical step viewers might miss or misunderstand the sequence of operations.
+2026-11-14 04:04:53,096 INFO Fact-check 1 fix: The script concludes with a question: 'When calculating Thevenin resistance, do you usually turn off the voltage sources first, or do you find the open-circuit voltage first?' This question is scientifically misleading. The order does not matter for the final result, but the *process* matters. Finding V_th requires the circuit to be active (sources on). Finding R_th requires sources off. Asking the viewer to choose 'first' implies a sequence that might confuse the fundamental separation of the two steps. It is better to state the steps definitively without posing a confusing question about the order of operations that could lead to procedural errors.
+2026-11-14 04:05:03,845 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:05:03,846 INFO Fact-check 2 fix: The script incorrectly states that a voltage source is turned off by replacing it with a short circuit, but then describes the example calculation using voltage division without explicitly showing the source being replaced by a short circuit in the R_th calculation step for the viewer, which can be confusing regarding the 'turning off' procedure order.
+2026-11-14 04:05:03,846 INFO Fact-check 2 fix: The script's example calculation for V_th states '12 times two-thirds' but the math 12 * 200 / (100 + 200) = 8 is correct, however the verbal explanation '12 volts times 200 ohms divided by the sum of 100 ohms and 200 ohms' is slightly ambiguous about whether the 100 ohm is internal or just part of the divider, and the script does not explicitly verify the final power match as a mandatory safety/quality check step for the viewer.
+2026-11-14 04:05:03,846 INFO Fact-check 2 fix: The script introduces Norton's Theorem only as a passing mention ('they are related by source transformation, but they are not the same thing') without providing the promised 'how to' steps or comparison, violating the channel's policy that titles promising setup must show every step.
+2026-11-14 04:05:03,846 INFO Fact-check 2 fix: The script states 'approximately 90% of students fail to master...' which is a vague, unverified statistic that lacks precision for an educational context.
+2026-11-14 04:05:03,846 INFO Fact-check 2 fix: The script's final example uses a 12V source and resistors. While 12V is safe, the script does not include a mandatory electrical safety disclaimer for the viewer, which is required for professional educational content.
+2026-11-14 04:05:06,720 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:05:06,820 INFO People search for: network theory neso academy; network theory gate neso academy; laplace transform network theory neso academy; neso academy network theory chapter 1; neso academy network theory theorems; neso academy network theory superposition theorem
+2026-11-14 04:05:07,235 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-14 04:05:07,235 INFO Title polished: Network Theory Neso Academy: Thevenin's Theorem | Simplify Any Circuit in 10 Minutes -> Network Theory Neso Academy: Thevenin's Theorem Simplify Any Circuit in 10 Minutes
+2026-11-14 04:05:07,235 INFO YouTube title: Network Theory Neso Academy: Thevenin's Theorem Simplify Any Circuit in 10 Minutes
+2026-11-14 04:05:08,374 INFO Created notebook 82a17caa-a7e0-4853-a9b7-ae1ec6140b16
+2026-11-14 04:05:11,021 INFO Script added as source
+2026-11-14 04:05:13,193 INFO Started cinematic video generation (task c4f07830-67cf-4237-b671-6a3b8d6c2152)
+2026-11-14 04:05:13,194 INFO Waiting for cinematic video (can take 30+ minutes)
+2026-11-14 04:31:04,192 INFO Downloaded cinematic video to output/video_raw.mp4
+2026-11-14 04:31:06,226 INFO Started NotebookLM Short (task 11573bc0-6cb7-4ba7-8e59-64a212a055a0)
+2026-11-14 04:41:27,053 INFO Downloaded NotebookLM Short to output/short_raw.mp4
+2026-11-14 04:41:30,108 INFO Video selected on https://notebooklmremover.com/en, waiting for processing
+2026-11-14 04:41:31,743 INFO Chose site mode 'Quality Priority (Original FPS, Slow)'
+2026-11-14 04:41:32,747 INFO Clicking '🚀 Start Removing Watermark'
+2026-11-14 04:41:46,021 INFO Watermark removal: 0%
+2026-11-14 04:41:51,026 INFO Watermark removal: 2%
+2026-11-14 04:41:56,032 INFO Watermark removal: 5%
+2026-11-14 04:42:01,037 INFO Watermark removal: 7%
+2026-11-14 04:42:06,043 INFO Watermark removal: 9%
+2026-11-14 04:42:11,049 INFO Watermark removal: 11%
+2026-11-14 04:42:16,055 INFO Watermark removal: 13%
+2026-11-14 04:42:21,061 INFO Watermark removal: 15%
+2026-11-14 04:42:26,067 INFO Watermark removal: 17%
+2026-11-14 04:42:31,073 INFO Watermark removal: 19%
+2026-11-14 04:42:36,082 INFO Watermark removal: 22%
+2026-11-14 04:42:41,310 INFO Watermark removal: 24%
+2026-11-14 04:42:46,316 INFO Watermark removal: 27%
+2026-11-14 04:42:51,322 INFO Watermark removal: 29%
+2026-11-14 04:42:56,328 INFO Watermark removal: 31%
+2026-11-14 04:43:01,334 INFO Watermark removal: 34%
+2026-11-14 04:43:06,340 INFO Watermark removal: 36%
+2026-11-14 04:43:11,346 INFO Watermark removal: 39%
+2026-11-14 04:43:16,352 INFO Watermark removal: 41%
+2026-11-14 04:43:21,359 INFO Watermark removal: 43%
+2026-11-14 04:43:26,365 INFO Watermark removal: 45%
+2026-11-14 04:43:31,371 INFO Watermark removal: 48%
+2026-11-14 04:43:36,377 INFO Watermark removal: 50%
+2026-11-14 04:43:41,613 INFO Watermark removal: 52%
+2026-11-14 04:43:46,619 INFO Watermark removal: 55%
+2026-11-14 04:43:51,625 INFO Watermark removal: 57%
+2026-11-14 04:43:56,631 INFO Watermark removal: 59%
+2026-11-14 04:44:01,637 INFO Watermark removal: 61%
+2026-11-14 04:44:06,642 INFO Watermark removal: 63%
+2026-11-14 04:44:11,647 INFO Watermark removal: 65%
+2026-11-14 04:44:16,654 INFO Watermark removal: 68%
+2026-11-14 04:44:21,660 INFO Watermark removal: 70%
+2026-11-14 04:44:26,665 INFO Watermark removal: 72%
+2026-11-14 04:44:31,671 INFO Watermark removal: 74%
+2026-11-14 04:44:36,681 INFO Watermark removal: 76%
+2026-11-14 04:44:41,938 INFO Watermark removal: 79%
+2026-11-14 04:44:46,945 INFO Watermark removal: 81%
+2026-11-14 04:44:51,950 INFO Watermark removal: 84%
+2026-11-14 04:44:56,956 INFO Watermark removal: 86%
+2026-11-14 04:45:01,963 INFO Watermark removal: 88%
+2026-11-14 04:45:06,969 INFO Watermark removal: 90%
+2026-11-14 04:45:11,975 INFO Watermark removal: 93%
+2026-11-14 04:45:16,981 INFO Watermark removal: 95%
+2026-11-14 04:45:21,987 INFO Watermark removal: 97%
+2026-11-14 04:45:26,991 INFO Clicking 'Download Clean Video'
+2026-11-14 04:45:35,421 INFO Downloaded clean video after 242s
+2026-11-14 04:45:35,562 INFO Website result: {'width': 1280, 'height': 720, 'fps': 30.0, 'duration': 328.376599, 'has_audio': True} (original {'width': 1280, 'height': 720, 'fps': 30.0, 'duration': 331.418413, 'has_audio': True})
+2026-11-14 04:45:35,607 INFO Adding channel name watermark: GetYr_ECE
+2026-11-14 04:47:46,722 INFO Added intro + video_final_main + outro
+2026-11-14 04:47:46,722 INFO Edited video saved to output/video_final.mp4
+2026-11-14 04:47:46,929 INFO Thumbnail candidate at 0.5s: detail 19.0
+2026-11-14 04:47:47,141 INFO Thumbnail candidate at 1.0s: detail 19.0
+2026-11-14 04:47:47,357 INFO Thumbnail candidate at 1.5s: detail 19.0
+2026-11-14 04:47:47,583 INFO Thumbnail candidate at 2.0s: detail 19.0
+2026-11-14 04:47:47,820 INFO Thumbnail candidate at 2.5s: detail 19.0
+2026-11-14 04:47:48,064 INFO Thumbnail candidate at 3.0s: detail 19.0
+2026-11-14 04:47:48,315 INFO Thumbnail candidate at 3.5s: detail 19.0
+2026-11-14 04:47:48,573 INFO Thumbnail candidate at 4.0s: detail 19.0
+2026-11-14 04:47:48,844 INFO Thumbnail candidate at 5.0s: detail 19.0
+2026-11-14 04:47:48,879 INFO Thumbnail taken from the video at 4.0s -> output/thumbnail.jpg
+2026-11-14 04:47:50,369 INFO Upload 24%
+2026-11-14 04:47:50,574 INFO Upload 48%
+2026-11-14 04:47:50,796 INFO Upload 73%
+2026-11-14 04:47:51,058 INFO Upload 97%
+2026-11-14 04:47:51,730 INFO Uploaded: https://youtu.be/p3Ka21j8_k4 (public)
+2026-11-14 04:47:56,538 INFO Thumbnail set
+2026-11-14 04:47:57,187 INFO Added to playlist: How Technology Works
+2026-11-14 04:47:59,951 INFO Video selected on https://notebooklmremover.com/en, waiting for processing
+2026-11-14 04:48:01,591 INFO Chose site mode 'Quality Priority (Original FPS, Slow)'
+2026-11-14 04:48:02,594 INFO Clicking '🚀 Start Removing Watermark'
+2026-11-14 04:48:05,622 INFO Watermark removal: 0%
+2026-11-14 04:48:10,919 INFO Watermark removal: 9%
+2026-11-14 04:48:15,926 INFO Watermark removal: 19%
+2026-11-14 04:48:20,932 INFO Watermark removal: 30%
+2026-11-14 04:48:25,939 INFO Watermark removal: 42%
+2026-11-14 04:48:30,944 INFO Watermark removal: 54%
+2026-11-14 04:48:35,951 INFO Watermark removal: 64%
+2026-11-14 04:48:40,957 INFO Watermark removal: 75%
+2026-11-14 04:48:45,963 INFO Watermark removal: 87%
+2026-11-14 04:48:50,968 INFO Clicking 'Download Clean Video'
+2026-11-14 04:48:59,056 INFO Downloaded clean video after 56s
+2026-11-14 04:48:59,208 INFO Website result: {'width': 720, 'height': 1280, 'fps': 30.0, 'duration': 77.136689, 'has_audio': True} (original {'width': 720, 'height': 1280, 'fps': 30.0, 'duration': 80.201723, 'has_audio': True})
+2026-11-14 04:49:11,542 INFO Using NotebookLM's Short (watermark removed)
+2026-11-14 04:49:11,543 INFO YouTube Shorts limit for today reached - Short goes to Reels only
+2026-11-14 04:50:14,511 WARNING Instagram direct upload failed: Instagram upload failed (400): {"debug_info":{"retriable":false,"type":"ProcessingFailedError","message":"Request processing failed"}} - trying the public-link method
+2026-11-14 04:51:23,820 INFO Instagram Reel posted via link (id 18016552988968909)
+2026-11-14 04:51:25,194 INFO Done: Network Theory Neso Academy: Thevenin's Theorem Simplify Any Circuit in 10 Minutes
+2026-11-14 04:51:26,613 INFO Deleted old NotebookLM notebook 82a17caa-a7e0-4853-a9b7-ae1ec6140b16
