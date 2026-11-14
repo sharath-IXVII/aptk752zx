@@ -29,13 +29,18 @@ def next_episode(order: Path) -> str:
 
 
 def slot(state) -> dt.datetime:
-    hh, mm = map(int, (os.getenv("COURSE_TIME") or "19:30").split(":"))
+    """Next free publishing time after the last scheduled chapter. COURSE_TIMES (IST), default
+    three a day: 12:00, 16:00, 19:30."""
+    times = [tuple(map(int, t.split(":"))) for t in (os.getenv("COURSE_TIMES") or "12:00,16:00,19:30").split(",")]
     now = dt.datetime.now(IST)
-    day = now.date()
-    if state.get("last_slot"):
-        day = max(day, dt.datetime.fromisoformat(state["last_slot"]).date() + dt.timedelta(days=1))
-    s = dt.datetime.combine(day, dt.time(hh, mm), IST)
-    return s if s - now > dt.timedelta(minutes=40) else s + dt.timedelta(days=1)
+    after = max(now + dt.timedelta(minutes=40), dt.datetime.fromisoformat(state["last_slot"]) + dt.timedelta(minutes=1)) if state.get("last_slot") else now + dt.timedelta(minutes=40)
+    day = after.date()
+    while True:
+        for hh, mm in times:
+            s = dt.datetime.combine(day, dt.time(hh, mm), IST)
+            if s >= after:
+                return s
+        day += dt.timedelta(days=1)
 
 
 def upload(ep: str, ep_path: Path, d: Path):

@@ -5,7 +5,7 @@ name: Course chapter
 # intro/outro and uploaded to its playlist, scheduled one chapter a day (7:30 PM IST).
 on:
   schedule:
-    - cron: "41 */6 * * *"
+    - cron: "41 */4 * * *"
   workflow_dispatch:
     inputs:
       publish_now:
