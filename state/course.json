@@ -11,7 +11,11 @@
   "network/p2_capacitor.json": {
    "id": "I2zdcT8Kdg4",
    "publish": "2026-11-15T19:30:00+05:30"
+  },
+  "network/p3_inductor.json": {
+   "id": "c5ezYmnNFnY",
+   "publish": "2026-11-16T19:30:00+05:30"
   }
  },
- "last_slot": "2026-11-15T19:30:00+05:30"
+ "last_slot": "2026-11-16T19:30:00+05:30"
 }

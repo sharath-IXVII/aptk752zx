@@ -34,6 +34,12 @@ jobs:
         run: git fetch -q origin main && git reset -q --hard origin/main && git log --oneline -1
       # Quick check first: stop in seconds if all slots are filled or the 6-hour gap
       # has not passed (and nothing is waiting to be finished).
+      - name: Start course chapters and story Shorts on time
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          h=$(date -u +%H)
+          [ $((10#$h % 4)) -eq 1 ] && gh workflow run course.yml -R ${{ github.repository }} || true
+          [ $((10#$h % 8)) -eq 2 ] && gh workflow run story_shorts.yml -R ${{ github.repository }} || true
       - name: Anything to do?
         id: check
         env:

@@ -34,6 +34,11 @@ def upload(key: str, ep_path: Path, video: Path) -> None:
     os.environ["YT_PRIVACY"] = "public"
     when = slot(state)
     vid = yt.upload(video, None, meta, publish_at=when)
+    try:
+        from pipeline import social
+        social.queue_short(state, Path(video), meta, None, None)  # Instagram Reel right away
+    except Exception as exc:
+        print("Instagram failed:", exc)
     state["done"][key] = {"id": vid, "publish": when.isoformat()}; state["last_slot"] = when.isoformat()
     STATE.parent.mkdir(exist_ok=True); STATE.write_text(json.dumps(state, indent=1))
     print(f"https://youtu.be/{vid} publish={when.isoformat()}")

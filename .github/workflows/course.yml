@@ -66,6 +66,7 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           COURSE_PUBLISH_NOW: ${{ inputs.publish_now && '1' || '0' }}
         run: |
+          git pull -q --rebase origin main || true
           EP=${{ steps.ep.outputs.ep }}
           python -m pipeline.course upload "$EP" "blend/studio/explainer/episodes/$EP" blend/studio/explainer/out
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
