@@ -97,7 +97,7 @@ def upload(video: Path, thumbnail: Path | None, meta: dict,
     return video_id
 
 
-def add_to_playlist(video_id: str, title: str) -> None:
+def add_to_playlist(video_id: str, title: str, position: int | None = None) -> None:
     """Add a video to the channel's playlist with this title, creating it if needed.
     Videos are added in upload order, so a course playlist stays in lesson order."""
     youtube = _client()
@@ -121,7 +121,8 @@ def add_to_playlist(video_id: str, title: str) -> None:
         try:
             youtube.playlistItems().insert(part="snippet", body={"snippet": {
                 "playlistId": playlist_id,
-                "resourceId": {"kind": "youtube#video", "videoId": video_id}}}).execute()
+                "resourceId": {"kind": "youtube#video", "videoId": video_id},
+                **({"position": position} if position is not None else {})}}).execute()
             break
         except Exception:
             if attempt == 3:

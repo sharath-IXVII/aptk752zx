@@ -20,6 +20,8 @@ def load():
 
 def next_episode(order: Path) -> str:
     st = load()
+    if st.get("redo"):  # a chapter marked for re-upload goes first
+        return st["redo"]
     if st.get("blocked"):  # a chapter the reviewer could not fix: wait for the owner, keep the order
         return ""
     done = st["done"]
@@ -41,11 +43,22 @@ def upload(ep: str, ep_path: Path, d: Path):
     meta = json.loads(ep_path.read_text())["yt"]
     os.environ["YT_PRIVACY"] = "public"
     when = None if os.getenv("COURSE_PUBLISH_NOW") == "1" else slot(state)
+    redo = state.get("redo") == ep and ep in state["done"]
+    position = None
+    if redo:  # re-upload a fixed chapter (the owner deletes the old upload): same publish time, same playlist place
+        when = dt.datetime.fromisoformat(state["done"][ep]["publish"])
+        if when <= dt.datetime.now(IST) + dt.timedelta(minutes=20):
+            when = None
+        order = json.loads((ep_path.parent / "order.json").read_text())
+        position = order.index(ep)
     thumb = d / "thumb.jpg"
     vid = yt.upload(d / "video_final.mp4", thumb if thumb.exists() else None, meta, publish_at=when)
-    yt.add_to_playlist(vid, meta.get("playlist") or "Network Theory")
+    yt.add_to_playlist(vid, meta.get("playlist") or "Network Theory", position)
     state["done"][ep] = {"id": vid, "publish": (when or dt.datetime.now(IST)).isoformat()}
-    state["last_slot"] = (when or dt.datetime.now(IST)).isoformat()
+    if redo:
+        state.pop("redo", None)
+    else:
+        state["last_slot"] = (when or dt.datetime.now(IST)).isoformat()
     STATE.parent.mkdir(exist_ok=True)
     STATE.write_text(json.dumps(state, indent=1))
     print(f"https://youtu.be/{vid} publish={state['last_slot']}")
