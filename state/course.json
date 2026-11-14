@@ -27,7 +27,11 @@
   "network/p6_ohm_power.json": {
    "id": "Jrh7F07Spsk",
    "publish": "2026-11-18T12:00:00+05:30"
+  },
+  "network/p7_series.json": {
+   "id": "6N6lrzni6f4",
+   "publish": "2026-11-18T16:00:00+05:30"
   }
  },
- "last_slot": "2026-11-18T12:00:00+05:30"
+ "last_slot": "2026-11-18T16:00:00+05:30"
 }
