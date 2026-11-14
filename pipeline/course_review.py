@@ -83,6 +83,28 @@ def fix(ep: dict, issues: list) -> int:
     return n
 
 
+CHECKER_MODEL = os.getenv("CHECKER_MODEL") or "qwen/qwen3-235b-a22b"
+CHECK = """You are a careful physics/electronics examiner. A reviewer claims a statement in a beginner
+lesson is wrong. Decide if the ORIGINAL statement is actually factually wrong (wrong fact, number,
+formula, unit or direction), showing your calculation. Unclear wording, style, order of words, or a
+correct simplification is NOT wrong. Reply JSON only: {"wrong": true|false, "why": "..."}"""
+
+
+def confirmed(ep: dict, issue: dict) -> bool:
+    """A second, independent model must confirm a critical mistake before it can stop a chapter."""
+    try:
+        i = int(issue.get("scene"))
+        scene = ep["scenes"][i]
+    except (TypeError, ValueError, IndexError):
+        return False
+    try:
+        r = llm.chat_json(json.dumps({"scene": scene, "claimed_problem": issue.get("problem")}, ensure_ascii=False),
+                          system=CHECK, temperature=0, max_tokens=1500, prefer=CHECKER_MODEL)
+        return bool(r.get("wrong"))
+    except Exception:
+        return False
+
+
 def main(path: Path) -> None:
     ep = json.loads(path.read_text())
     log = []
@@ -102,6 +124,7 @@ def main(path: Path) -> None:
             break
     final = review(ep)
     crit = [i for i in final.get("issues", []) if i.get("severity") == "critical"]
+    crit = [i for i in crit if confirmed(ep, i)]  # drop the reviewer's false alarms
     path.write_text(json.dumps(ep, indent=1, ensure_ascii=False))
     Path("review_log.txt").write_text("\n".join(log + [f"final critical: {len(crit)}"] +
                                               [f"[critical] scene {i.get('scene')}: {i.get('problem')}" for i in crit]))
