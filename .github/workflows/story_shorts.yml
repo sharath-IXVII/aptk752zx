@@ -3,8 +3,9 @@ name: Story Shorts
 # Volt story Shorts for the Network Theory playlist (gptk755blend/studio/explainer/episodes/shorts/order.json).
 # Reviewer AI checks each one, then it is rendered (vertical, < 60 s) and scheduled: 2 a day, 10:00 and 17:00 IST.
 on:
-  schedule:
-    - cron: "11 */8 * * *"
+  # schedule:
+    # paused by owner:
+    #- cron: "11 */8 * * *"
   workflow_dispatch:
 
 concurrency: {group: story-shorts, cancel-in-progress: false}

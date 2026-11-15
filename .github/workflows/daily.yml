@@ -38,12 +38,10 @@ jobs:
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
           h=$(date -u +%H)
-          [ $((10#$h % 4)) -eq 1 ] && gh workflow run course.yml -R ${{ github.repository }} || true
-          [ $((10#$h % 8)) -eq 2 ] && gh workflow run story_shorts.yml -R ${{ github.repository }} || true
       - name: Anything to do?
         id: check
         env:
-          VIDEOS_PER_DAY: "0"   # NotebookLM stopped on ECE: 3 course chapters + 2 story Shorts a day instead (course.yml)
+          VIDEOS_PER_DAY: "3"   # NotebookLM back on ECE (course playlist and story Shorts paused)
           YT_PUBLISH_TIMES: "12:00,18:00"
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
         run: python3 pipeline/plan.py >> "$GITHUB_OUTPUT" && cat "$GITHUB_OUTPUT"
@@ -89,7 +87,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}   # temporary public link for the Reels
           YT_PRIVACY: ${{ vars.YT_PRIVACY || 'public' }}
           YT_PUBLISH_TIMES: "12:00,18:00"
-          VIDEOS_PER_DAY: "0"   # NotebookLM stopped on ECE: 3 course chapters + 2 story Shorts a day instead (course.yml)
+          VIDEOS_PER_DAY: "3"   # NotebookLM back on ECE (course playlist and story Shorts paused)
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
           YT_CATEGORY: ${{ vars.YT_CATEGORY }}
           WATERMARK_BOX: ${{ vars.WATERMARK_BOX }}

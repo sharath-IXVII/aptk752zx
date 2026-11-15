@@ -4,8 +4,9 @@ name: Course chapter
 # (theory chapters, then the numericals). A reviewer AI checks it first; it is rendered with the channel
 # intro/outro and uploaded to its playlist, scheduled one chapter a day (7:30 PM IST).
 on:
-  schedule:
-    - cron: "41 */4 * * *"
+  # schedule:
+    # paused by owner:
+    #- cron: "41 */4 * * *"
   workflow_dispatch:
     inputs:
       publish_now:
