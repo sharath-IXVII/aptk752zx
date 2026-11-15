@@ -39,7 +39,11 @@
   "network/p9_kcl.json": {
    "id": "PqDi9i95gQo",
    "publish": "2026-11-19T16:00:00+05:30"
+  },
+  "network/p10_kvl.json": {
+   "id": "hHOkwcknEG8",
+   "publish": "2026-11-19T19:30:00+05:30"
   }
  },
- "last_slot": "2026-11-19T16:00:00+05:30"
+ "last_slot": "2026-11-19T19:30:00+05:30"
 }
