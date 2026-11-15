@@ -35,7 +35,11 @@
   "network/p8_parallel.json": {
    "id": "wBsTMEPEDBA",
    "publish": "2026-11-19T12:00:00+05:30"
+  },
+  "network/p9_kcl.json": {
+   "id": "PqDi9i95gQo",
+   "publish": "2026-11-19T16:00:00+05:30"
   }
  },
- "last_slot": "2026-11-19T12:00:00+05:30"
+ "last_slot": "2026-11-19T16:00:00+05:30"
 }
