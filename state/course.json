@@ -49,5 +49,6 @@
    "publish": "2026-11-20T13:00:00+05:30"
   }
  },
- "last_slot": "2026-11-20T13:00:00+05:30"
+ "last_slot": "2026-11-20T13:00:00+05:30",
+ "blocked": "analog2/a02_rl_highpass.json"
 }
