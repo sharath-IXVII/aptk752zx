@@ -14,6 +14,11 @@ from pipeline import llm
 REVIEWER_MODEL = os.getenv("REVIEWER_MODEL") or "deepseek-ai/deepseek-v4.1-flash"
 
 SCENES = """WHAT EACH SCENE TYPE DRAWS (all of this IS on screen - never ask to "verify" it):
+- hpf: RC high-pass filter, circuit on the LEFT (AC source Vin, capacitor C in series, R=1 kOhm to ground, Vout across R) with
+  charges moving around the loop and +/- charge on the capacitor plates, live Xc, Vin, Vout, Vc values; RIGHT side: mode build
+  (circuit drawn piece by piece), compare (the low-pass circuit), run (Vin and Vout waveforms drawn live for a half/full cycle at
+  f = ratio x 1 kHz, steady-state, Vout leads Vin), sweep (output-vs-frequency curve 50 Hz-20 kHz with fc and 70.7% marked),
+  fc (the fc = 1/(2 pi R C) working, R = 1 kOhm, C = 0.159 uF, fc = 1 kHz). Never add diagram/flowchart scenes.
 - dc: a circuit (battery v, resistors r[], series/parallel) with electrons moving; show "current" = ammeter
   reading (computed V/R), "voltage" = a voltmeter on each resistor, "heat" = resistor glow; v_to sweeps the voltage.
 - inside: zoom into a material: atoms + drifting electrons that visibly collide (mode wire/resistor/insulator/no-voltage).

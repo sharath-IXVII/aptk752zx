@@ -59,6 +59,12 @@ def upload(ep: str, ep_path: Path, d: Path):
     thumb = d / "thumb.jpg"
     vid = yt.upload(d / "video_final.mp4", thumb if thumb.exists() else None, meta, publish_at=when)
     yt.add_to_playlist(vid, meta.get("playlist") or "Network Theory", position)
+    short = d / "short_final.mp4"
+    if short.exists():  # one Short for every second playlist video, linking to the full lesson
+        sm = {"title": (meta.get("short_title") or meta["title"].split("|")[0].strip() + " #shorts")[:100],
+              "description": f"Full lesson: https://youtu.be/{vid}\n\n" + meta.get("description", ""), "tags": meta.get("tags", [])}
+        try: print("Short:", yt.upload(short, None, sm, publish_at=when))
+        except Exception as exc: print("Short upload failed:", exc)
     state["done"][ep] = {"id": vid, "publish": (when or dt.datetime.now(IST)).isoformat()}
     if redo:
         state.pop("redo", None)

@@ -1,12 +1,11 @@
 name: Course chapter
 
-# Renders the next chapter listed in gptk755blend/studio/explainer/episodes/network/order.json
+# Renders the next chapter listed in gptk755blend/studio/explainer/episodes/analog2/order.json
 # (theory chapters, then the numericals). A reviewer AI checks it first; it is rendered with the channel
 # intro/outro and uploaded to its playlist, scheduled one chapter a day (7:30 PM IST).
 on:
-  # schedule:
-    # paused by owner:
-    #- cron: "41 */4 * * *"
+  schedule:
+    - cron: "41 */4 * * *"
   workflow_dispatch:
     inputs:
       publish_now:
@@ -31,7 +30,7 @@ jobs:
         id: ep
         run: |
           pip install -q python-dotenv google-api-python-client google-auth httpx
-          e=$(python -m pipeline.course next blend/studio/explainer/episodes/network/order.json)
+          e=$(python -m pipeline.course next blend/studio/explainer/episodes/analog2/order.json)
           echo "ep=$e" >> $GITHUB_OUTPUT; echo "next: ${e:-none}"
       - name: Reviewer AI checks and fixes the chapter (stops only if it cannot fix it)
         id: review
@@ -52,6 +51,10 @@ jobs:
           pip install -q edge-tts "kokoro>=0.9.4" soundfile
           python voice.py "$EP" public props.json
           npx remotion render src/index.ts Explainer out/video.mp4 --props=props.json --concurrency=4 --crf=18
+          if python3 -c "import json,sys;sys.exit(0 if json.load(open('$EP')).get('post_short') else 1)"; then
+            npx remotion render src/index.ts Short out/short.mp4 --props=props_short.json --concurrency=4 --crf=18
+            [ -f public/music_short.wav ] && ffmpeg -y -loglevel error -i out/short.mp4 -i public/music_short.wav -filter_complex "[1:a]volume=0.4[m];[0:a][m]amix=inputs=2:duration=first:normalize=0[a]" -map 0:v -map "[a]" -c:v copy -c:a aac out/short_final.mp4 || cp out/short.mp4 out/short_final.mp4
+          fi
           npx remotion still src/index.ts Thumbnail out/thumb.png --props=props.json || true
           [ -f out/thumb.png ] && ffmpeg -y -loglevel error -i out/thumb.png -q:v 3 out/thumb.jpg
           N="scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,format=yuv420p"
@@ -66,6 +69,7 @@ jobs:
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           COURSE_PUBLISH_NOW: ${{ inputs.publish_now && '1' || '0' }}
+          COURSE_TIMES: "13:00,17:00"   # 2 Analog videos a day
         run: |
           git pull -q --rebase origin main || true
           EP=${{ steps.ep.outputs.ep }}

@@ -38,11 +38,12 @@ jobs:
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
           h=$(date -u +%H)
+          [ $((10#$h % 4)) -eq 1 ] && gh workflow run course.yml -R ${{ github.repository }} || true
       - name: Anything to do?
         id: check
         env:
-          VIDEOS_PER_DAY: "2"   # NotebookLM on ECE until the Analog series arrives; quality over volume
-          YT_PUBLISH_TIMES: "12:00,18:00"
+          VIDEOS_PER_DAY: "1"   # 1 trending NotebookLM video a day (+ its Short); 2 Analog playlist videos come from course.yml
+          YT_PUBLISH_TIMES: "20:00"
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
         run: python3 pipeline/plan.py >> "$GITHUB_OUTPUT" && cat "$GITHUB_OUTPUT"
       - uses: actions/setup-python@v5
@@ -86,8 +87,8 @@ jobs:
           META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
           GH_TOKEN: ${{ github.token }}   # temporary public link for the Reels
           YT_PRIVACY: ${{ vars.YT_PRIVACY || 'public' }}
-          YT_PUBLISH_TIMES: "12:00,18:00"
-          VIDEOS_PER_DAY: "2"   # NotebookLM on ECE until the Analog series arrives; quality over volume
+          YT_PUBLISH_TIMES: "20:00"
+          VIDEOS_PER_DAY: "1"   # 1 trending NotebookLM video a day (+ its Short); 2 Analog playlist videos come from course.yml
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
           YT_CATEGORY: ${{ vars.YT_CATEGORY }}
           WATERMARK_BOX: ${{ vars.WATERMARK_BOX }}
