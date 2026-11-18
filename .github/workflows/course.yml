@@ -55,8 +55,7 @@ jobs:
             npx remotion render src/index.ts Short out/short.mp4 --props=props_short.json --concurrency=4 --crf=18
             [ -f public/music_short.wav ] && ffmpeg -y -loglevel error -i out/short.mp4 -i public/music_short.wav -filter_complex "[1:a]volume=0.4[m];[0:a][m]amix=inputs=2:duration=first:normalize=0[a]" -map 0:v -map "[a]" -c:v copy -c:a aac out/short_final.mp4 || cp out/short.mp4 out/short_final.mp4
           fi
-          npx remotion still src/index.ts Thumbnail out/thumb.png --props=props.json || true
-          [ -f out/thumb.png ] && ffmpeg -y -loglevel error -i out/thumb.png -q:v 3 out/thumb.jpg
+          rm -f out/thumb.png out/thumb.jpg   # the owner uploads thumbnails himself
           N="scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,format=yuv420p"
           A="aresample=48000,aformat=channel_layouts=stereo"
           ffmpeg -y -loglevel error -i brand/intro.mp4 -i out/video.mp4 -i brand/outro.mp4 -filter_complex \
