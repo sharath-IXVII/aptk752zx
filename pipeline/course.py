@@ -25,7 +25,10 @@ def next_episode(order: Path) -> str:
     if st.get("blocked"):  # a chapter the reviewer could not fix: wait for the owner, keep the order
         return ""
     done = st["done"]
-    return next((e for e in json.loads(order.read_text()) if e not in done), "")
+    nxt = next((e for e in json.loads(order.read_text()) if e not in done), "")
+    if nxt and not json.loads((order.parent.parent / nxt).read_text()).get("checked"):
+        print(f"waiting: {nxt} has not been checked by eye yet", file=sys.stderr); return ""  # never upload an unchecked video
+    return nxt
 
 
 def slot(state) -> dt.datetime:
