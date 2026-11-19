@@ -19,6 +19,9 @@ SCENES = """WHAT EACH SCENE TYPE DRAWS (all of this IS on screen - never ask to 
   (circuit drawn piece by piece), compare (the low-pass circuit), run (Vin and Vout waveforms drawn live for a half/full cycle at
   f = ratio x 1 kHz, steady-state, Vout leads Vin), sweep (output-vs-frequency curve 50 Hz-20 kHz with fc and 70.7% marked),
   fc (the fc = 1/(2 pi R C) working, R = 1 kOhm, C = 0.159 uF, fc = 1 kHz). Never add diagram/flowchart scenes.
+  With "kind":"rl" it is the RL high-pass: R = 1 kOhm in SERIES, inductor L = 159 mH (0.159 H) to ground, Vout across L,
+  XL = 2 pi f L, fc = R / (2 pi L) = 1000 / (2 x 3.14 x 0.159) = about 1000 Hz. 159 mH IS correct for fc = 1 kHz (do not confuse
+  with 1/(2 pi R L)); the dotted rings show the magnetic field, stronger when more current flows.
 - dc: a circuit (battery v, resistors r[], series/parallel) with electrons moving; show "current" = ammeter
   reading (computed V/R), "voltage" = a voltmeter on each resistor, "heat" = resistor glow; v_to sweeps the voltage.
 - inside: zoom into a material: atoms + drifting electrons that visibly collide (mode wire/resistor/insulator/no-voltage).
