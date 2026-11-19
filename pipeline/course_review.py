@@ -119,6 +119,8 @@ def confirmed(ep: dict, issue: dict) -> bool:
 
 def main(path: Path) -> None:
     ep = json.loads(path.read_text())
+    if ep.get("checked"):  # owner's decision (Nov 2026): he reviews hand-checked chapters himself; the AI must not rewrite or block them
+        Path("review_log.txt").write_text("checked by hand - AI review skipped (owner reviews)"); print("Reviewer: skipped (owner reviews)"); return
     log = []
     for rnd in range(1, 4):
         r = review(ep)
