@@ -61,7 +61,7 @@ jobs:
           ffmpeg -y -loglevel error -i brand/intro.mp4 -i out/video.mp4 -i brand/outro.mp4 -filter_complex \
             "[0:v]$N[v0];[1:v]$N[v1];[2:v]$N[v2];[0:a]$A[a0];[1:a]$A[a1];[2:a]$A[a2];[v0][a0][v1][a1][v2][a2]concat=n=3:v=1:a=1[v][a]" \
             -map "[v]" -map "[a]" -c:v libx264 -crf 19 -preset medium -c:a aac -b:a 192k -movflags +faststart out/video_final.mp4
-      - name: Make already-uploaded Analog videos public (owner: no scheduling)
+      - name: "Make already-uploaded Analog videos public (no scheduling)"
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
