@@ -131,3 +131,10 @@ def add_to_playlist(video_id: str, title: str, position: int | None = None) -> N
                 raise
             time.sleep(20 * (attempt + 1))
     log.info("Added to playlist: %s", title)
+
+
+def make_public(video_id: str) -> None:
+    """Publish a scheduled/private video right now."""
+    youtube = _client()
+    youtube.videos().update(part="status", body={"id": video_id, "status": {"privacyStatus": "public"}}).execute()
+    print("public:", video_id)

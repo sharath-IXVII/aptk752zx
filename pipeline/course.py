@@ -25,6 +25,10 @@ def next_episode(order: Path) -> str:
     if st.get("blocked"):  # a chapter the reviewer could not fix: wait for the owner, keep the order
         return ""
     done = st["done"]
+    times = [tuple(map(int, t.split(":"))) for t in (os.getenv("COURSE_TIMES") or "13:00,17:00").split(",")]
+    now = dt.datetime.now(IST); today = sum(1 for v in done.values() if str(v.get("publish", ""))[:10] == now.date().isoformat())
+    if today >= len(times) or (now.hour, now.minute) < times[today]:
+        return ""  # 2 a day, public on upload: the first after 13:00 IST, the second after 17:00
     nxt = next((e for e in json.loads(order.read_text()) if e not in done), "")
     if nxt and not json.loads((order.parent.parent / nxt).read_text()).get("checked"):
         print(f"waiting: {nxt} has not been checked by eye yet", file=sys.stderr); return ""  # never upload an unchecked video
@@ -50,11 +54,11 @@ def upload(ep: str, ep_path: Path, d: Path):
     state = load()
     meta = json.loads(ep_path.read_text())["yt"]
     os.environ["YT_PRIVACY"] = "public"
-    when = None if os.getenv("COURSE_PUBLISH_NOW") == "1" else slot(state)
+    when = None  # owner: Analog videos go public as soon as they are uploaded (no scheduling)
     redo = state.get("redo") == ep and ep in state["done"]
     position = None
     if redo:  # re-upload a fixed chapter (the owner deletes the old upload): same publish time, same playlist place
-        when = dt.datetime.fromisoformat(state["done"][ep]["publish"])
+        when = None  # owner: public on upload
         if when <= dt.datetime.now(IST) + dt.timedelta(minutes=20):
             when = None
         order = json.loads((ep_path.parent / "order.json").read_text())
@@ -66,7 +70,7 @@ def upload(ep: str, ep_path: Path, d: Path):
     if short.exists():  # one Short for every second playlist video, linking to the full lesson
         sm = {"title": (meta.get("short_title") or meta["title"].split("|")[0].strip() + " #shorts")[:100],
               "description": f"Full lesson: https://youtu.be/{vid}\n\n" + meta.get("description", ""), "tags": meta.get("tags", [])}
-        try: print("Short:", yt.upload(short, None, sm, publish_at=when))
+        try: print("Short:", yt.upload(short, None, sm, publish_at=None))
         except Exception as exc: print("Short upload failed:", exc)
     state["done"][ep] = {"id": vid, "publish": (when or dt.datetime.now(IST)).isoformat()}
     if redo:
@@ -77,6 +81,21 @@ def upload(ep: str, ep_path: Path, d: Path):
     STATE.write_text(json.dumps(state, indent=1))
     print(f"https://youtu.be/{vid} publish={state['last_slot']}")
 
+
+if __name__ == "__main__" and sys.argv[1] == "publish_all":  # make the Analog uploads (and their Shorts) public now
+    import glob
+    titles = set()
+    for f in glob.glob(sys.argv[2] + "/*.json"):
+        try: m = json.loads(Path(f).read_text())["yt"]
+        except Exception: continue
+        titles.add(m["title"][:100]); titles.add((m.get("short_title") or m["title"].split("|")[0].strip() + " #shorts")[:100])
+    y = yt._client()
+    up = y.channels().list(part="contentDetails", mine=True).execute()["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+    ids = [i["contentDetails"]["videoId"] for i in y.playlistItems().list(part="contentDetails", playlistId=up, maxResults=50).execute()["items"]]
+    for v in y.videos().list(part="snippet,status", id=",".join(ids)).execute()["items"]:
+        if v["status"]["privacyStatus"] == "private" and v["snippet"]["title"] in titles:
+            yt.make_public(v["id"]); print("made public:", v["snippet"]["title"])
+    sys.exit(0)
 
 if __name__ == "__main__":
     import logging; logging.basicConfig(level=logging.INFO)
