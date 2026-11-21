@@ -1,0 +1,115 @@
+2026-11-21 11:57:23,554 INFO Already scheduled: ['2026-11-09T12:00:00+05:30', '2026-11-09T15:00:00+05:30', '2026-11-09T18:00:00+05:30', '2026-11-10T12:00:00+05:30', '2026-11-10T15:00:00+05:30', '2026-11-10T18:00:00+05:30', '2026-11-11T12:00:00+05:30', '2026-11-11T18:00:00+05:30', '2026-11-12T12:00:00+05:30', '2026-11-12T18:00:00+05:30', '2026-11-13T12:00:00+05:30', '2026-11-13T18:00:00+05:30', '2026-11-14T12:00:00+05:30', '2026-11-14T18:00:00+05:30', '2026-11-15T12:00:00+05:30', '2026-11-15T18:00:00+05:30']
+2026-11-21 11:57:24,399 INFO Created notebook fffea6cb-5b4d-4569-a75d-4f14d7848c46
+2026-11-21 11:57:26,406 INFO Script added as source
+2026-11-21 11:57:28,070 INFO Started cinematic video generation (task 78e14482-b860-4ec3-8fcb-2f04339e3beb)
+2026-11-21 11:57:28,070 INFO Waiting for cinematic video (can take 30+ minutes)
+2026-11-21 12:20:38,724 INFO Downloaded cinematic video to output/video_raw.mp4
+2026-11-21 12:20:40,054 INFO Started NotebookLM Short (task 32b90a51-92a6-4491-84cb-d0812e5202bd)
+2026-11-21 12:32:38,119 INFO Downloaded NotebookLM Short to output/short_raw.mp4
+2026-11-21 12:32:41,173 INFO Video selected on https://notebooklmremover.com/en, waiting for processing
+2026-11-21 12:32:42,851 INFO Chose site mode 'Quality Priority (Original FPS, Slow)'
+2026-11-21 12:32:43,856 INFO Clicking '🚀 Start Removing Watermark'
+2026-11-21 12:33:07,260 INFO Watermark removal: 0%
+2026-11-21 12:33:12,267 INFO Watermark removal: 1%
+2026-11-21 12:33:17,274 INFO Watermark removal: 2%
+2026-11-21 12:33:22,281 INFO Watermark removal: 4%
+2026-11-21 12:33:27,288 INFO Watermark removal: 6%
+2026-11-21 12:33:32,295 INFO Watermark removal: 8%
+2026-11-21 12:33:37,303 INFO Watermark removal: 10%
+2026-11-21 12:33:42,309 INFO Watermark removal: 12%
+2026-11-21 12:33:47,317 INFO Watermark removal: 14%
+2026-11-21 12:33:52,656 INFO Watermark removal: 16%
+2026-11-21 12:33:57,663 INFO Watermark removal: 18%
+2026-11-21 12:34:02,669 INFO Watermark removal: 20%
+2026-11-21 12:34:07,677 INFO Watermark removal: 22%
+2026-11-21 12:34:12,684 INFO Watermark removal: 24%
+2026-11-21 12:34:17,691 INFO Watermark removal: 26%
+2026-11-21 12:34:22,698 INFO Watermark removal: 28%
+2026-11-21 12:34:27,704 INFO Watermark removal: 30%
+2026-11-21 12:34:32,713 INFO Watermark removal: 32%
+2026-11-21 12:34:37,721 INFO Watermark removal: 34%
+2026-11-21 12:34:42,729 INFO Watermark removal: 36%
+2026-11-21 12:34:47,736 INFO Watermark removal: 38%
+2026-11-21 12:34:53,116 INFO Watermark removal: 40%
+2026-11-21 12:34:58,122 INFO Watermark removal: 42%
+2026-11-21 12:35:03,129 INFO Watermark removal: 44%
+2026-11-21 12:35:08,136 INFO Watermark removal: 46%
+2026-11-21 12:35:13,142 INFO Watermark removal: 47%
+2026-11-21 12:35:18,150 INFO Watermark removal: 48%
+2026-11-21 12:35:23,157 INFO Watermark removal: 49%
+2026-11-21 12:35:28,164 INFO Watermark removal: 51%
+2026-11-21 12:35:33,171 INFO Watermark removal: 53%
+2026-11-21 12:35:38,177 INFO Watermark removal: 55%
+2026-11-21 12:35:43,184 INFO Watermark removal: 57%
+2026-11-21 12:35:48,191 INFO Watermark removal: 59%
+2026-11-21 12:35:53,522 INFO Watermark removal: 61%
+2026-11-21 12:35:58,528 INFO Watermark removal: 62%
+2026-11-21 12:36:03,535 INFO Watermark removal: 63%
+2026-11-21 12:36:08,542 INFO Watermark removal: 64%
+2026-11-21 12:36:13,549 INFO Watermark removal: 66%
+2026-11-21 12:36:18,555 INFO Watermark removal: 68%
+2026-11-21 12:36:23,563 INFO Watermark removal: 70%
+2026-11-21 12:36:28,569 INFO Watermark removal: 72%
+2026-11-21 12:36:33,575 INFO Watermark removal: 73%
+2026-11-21 12:36:38,582 INFO Watermark removal: 74%
+2026-11-21 12:36:43,589 INFO Watermark removal: 75%
+2026-11-21 12:36:48,595 INFO Watermark removal: 77%
+2026-11-21 12:36:53,926 INFO Watermark removal: 79%
+2026-11-21 12:36:58,933 INFO Watermark removal: 80%
+2026-11-21 12:37:03,939 INFO Watermark removal: 81%
+2026-11-21 12:37:08,946 INFO Watermark removal: 82%
+2026-11-21 12:37:13,954 INFO Watermark removal: 84%
+2026-11-21 12:37:18,960 INFO Watermark removal: 86%
+2026-11-21 12:37:23,967 INFO Watermark removal: 88%
+2026-11-21 12:37:28,973 INFO Watermark removal: 89%
+2026-11-21 12:37:33,980 INFO Watermark removal: 91%
+2026-11-21 12:37:38,987 INFO Watermark removal: 94%
+2026-11-21 12:37:43,994 INFO Watermark removal: 95%
+2026-11-21 12:37:49,330 INFO Watermark removal: 98%
+2026-11-21 12:37:54,335 INFO Clicking 'Download Clean Video'
+2026-11-21 12:38:02,841 INFO Downloaded clean video after 318s
+2026-11-21 12:38:03,107 INFO Website result: {'width': 1280, 'height': 720, 'fps': 30.0, 'duration': 286.255601, 'has_audio': True} (original {'width': 1280, 'height': 720, 'fps': 30.0, 'duration': 289.297415, 'has_audio': True})
+2026-11-21 12:38:03,171 INFO Adding channel name watermark: GetYr_ECE
+2026-11-21 12:41:05,374 INFO Added intro + video_final_main + outro
+2026-11-21 12:41:05,374 INFO Edited video saved to output/video_final.mp4
+2026-11-21 12:41:05,715 INFO Thumbnail candidate at 0.5s: detail 44.3
+2026-11-21 12:41:06,072 INFO Thumbnail candidate at 1.0s: detail 44.5
+2026-11-21 12:41:06,452 INFO Thumbnail candidate at 1.5s: detail 44.5
+2026-11-21 12:41:06,856 INFO Thumbnail candidate at 2.0s: detail 44.7
+2026-11-21 12:41:07,278 INFO Thumbnail candidate at 2.5s: detail 45.8
+2026-11-21 12:41:07,727 INFO Thumbnail candidate at 3.0s: detail 47.1
+2026-11-21 12:41:08,208 INFO Thumbnail candidate at 3.5s: detail 48.1
+2026-11-21 12:41:08,705 INFO Thumbnail candidate at 4.0s: detail 48.7
+2026-11-21 12:41:09,253 INFO Thumbnail candidate at 5.0s: detail 50.4
+2026-11-21 12:41:09,299 INFO Thumbnail taken from the video at 5.0s -> output/thumbnail.jpg
+2026-11-21 12:41:10,426 INFO Upload 15%
+2026-11-21 12:41:10,593 INFO Upload 30%
+2026-11-21 12:41:10,741 INFO Upload 45%
+2026-11-21 12:41:10,917 INFO Upload 60%
+2026-11-21 12:41:11,138 INFO Upload 75%
+2026-11-21 12:41:11,299 INFO Upload 91%
+2026-11-21 12:41:11,786 INFO Uploaded: https://youtu.be/UW-boet9QgM (public)
+2026-11-21 12:41:14,565 INFO Thumbnail set
+2026-11-21 12:41:15,098 INFO Added to playlist: How Technology Works
+2026-11-21 12:41:18,050 INFO Video selected on https://notebooklmremover.com/en, waiting for processing
+2026-11-21 12:41:19,733 INFO Chose site mode 'Quality Priority (Original FPS, Slow)'
+2026-11-21 12:41:20,738 INFO Clicking '🚀 Start Removing Watermark'
+2026-11-21 12:41:29,269 INFO Watermark removal: 8%
+2026-11-21 12:41:34,276 INFO Watermark removal: 16%
+2026-11-21 12:41:39,284 INFO Watermark removal: 25%
+2026-11-21 12:41:44,291 INFO Watermark removal: 36%
+2026-11-21 12:41:49,298 INFO Watermark removal: 46%
+2026-11-21 12:41:54,304 INFO Watermark removal: 57%
+2026-11-21 12:41:59,312 INFO Watermark removal: 69%
+2026-11-21 12:42:04,319 INFO Watermark removal: 78%
+2026-11-21 12:42:09,326 INFO Watermark removal: 88%
+2026-11-21 12:42:14,331 INFO Clicking 'Download Clean Video'
+2026-11-21 12:42:22,428 INFO Downloaded clean video after 61s
+2026-11-21 12:42:22,612 INFO Website result: {'width': 720, 'height': 1280, 'fps': 30.0, 'duration': 65.108753, 'has_audio': True} (original {'width': 720, 'height': 1280, 'fps': 30.0, 'duration': 68.150567, 'has_audio': True})
+2026-11-21 12:42:35,400 INFO Using NotebookLM's Short (watermark removed)
+2026-11-21 12:42:36,902 INFO Uploaded: https://youtu.be/ncZxlgwkbDY (public)
+2026-11-21 12:42:36,903 INFO Short uploaded: https://youtu.be/ncZxlgwkbDY
+2026-11-21 12:43:40,531 WARNING Instagram direct upload failed: Instagram upload failed (400): {"debug_info":{"retriable":false,"type":"ProcessingFailedError","message":"Request processing failed"}} - trying the public-link method
+2026-11-21 12:44:45,021 INFO Instagram Reel posted via link (id 18135188701763937)
+2026-11-21 12:44:46,738 INFO Done: How Sand Becomes a Smartphone Brain | Semiconductors Explained
+2026-11-21 12:44:47,646 INFO Deleted old NotebookLM notebook fffea6cb-5b4d-4569-a75d-4f14d7848c46
