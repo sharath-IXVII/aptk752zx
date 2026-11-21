@@ -42,7 +42,7 @@ jobs:
       - name: Anything to do?
         id: check
         env:
-          VIDEOS_PER_DAY: "0"   # PAUSED: NotebookLM login expired (Nov 21) - set back to "1" after the owner refreshes the NotebookLM secrets
+          VIDEOS_PER_DAY: "1"   # 1 trending NotebookLM video a day (+ its Short); 2 Analog playlist videos come from course.yml
           YT_PUBLISH_TIMES: "20:00"
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
         run: python3 pipeline/plan.py >> "$GITHUB_OUTPUT" && cat "$GITHUB_OUTPUT"
@@ -88,7 +88,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}   # temporary public link for the Reels
           YT_PRIVACY: ${{ vars.YT_PRIVACY || 'public' }}
           YT_PUBLISH_TIMES: "20:00"
-          VIDEOS_PER_DAY: "0"   # PAUSED: NotebookLM login expired (Nov 21) - set back to "1" after the owner refreshes the NotebookLM secrets
+          VIDEOS_PER_DAY: "1"   # 1 trending NotebookLM video a day (+ its Short); 2 Analog playlist videos come from course.yml
           BUFFER_DAYS: ${{ vars.BUFFER_DAYS }}
           YT_CATEGORY: ${{ vars.YT_CATEGORY }}
           WATERMARK_BOX: ${{ vars.WATERMARK_BOX }}
