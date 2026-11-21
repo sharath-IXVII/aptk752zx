@@ -74,6 +74,8 @@ def book(state: dict, slot: dt.datetime) -> None:
 def nothing_to_do(state: dict) -> bool:
     """True if this run can stop at once: no unfinished video and either the buffer is full or
     NotebookLM's 6-hour gap has not passed yet."""
+    if os.getenv("VIDEOS_PER_DAY") == "0":
+        return True  # NotebookLM paused on this channel: do nothing, not even an unfinished job
     if state.get("job"):
         return False
     if any(dt.datetime.fromisoformat(r["at"]) <= now() for r in state.get("reels", [])):
