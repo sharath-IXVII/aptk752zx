@@ -51,7 +51,11 @@
   "analog2/a02_rl_highpass.json": {
    "id": "XEqwFGJu3Z4",
    "publish": "2026-11-20T19:54:36.663628+05:30"
+  },
+  "analog2/a03_butterworth.json": {
+   "id": "rhGji7NhS7Q",
+   "publish": "2026-11-22T15:09:30.884978+05:30"
   }
  },
- "last_slot": "2026-11-20T19:54:36.663628+05:30"
+ "last_slot": "2026-11-22T15:09:30.884996+05:30"
 }
