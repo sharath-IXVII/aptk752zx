@@ -376,5 +376,11 @@
     "topic": "Semiconductors Explained: From Sand to Smartphone",
     "title": "How Sand Becomes a Smartphone Brain | Semiconductors Explained",
     "youtube_id": "UW-boet9QgM"
+  },
+  {
+    "date": "2026-11-22",
+    "topic": "esp32 projects",
+    "title": "The Hidden Danger of ESP32 Power Supplies & Bridge Rectifiers",
+    "youtube_id": "pQDw624Hrrk"
   }
 ]
