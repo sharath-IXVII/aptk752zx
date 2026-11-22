@@ -55,7 +55,11 @@
   "analog2/a03_butterworth.json": {
    "id": "rhGji7NhS7Q",
    "publish": "2026-11-22T15:09:30.884978+05:30"
+  },
+  "analog2/a04_bandpass.json": {
+   "id": "hVu-xNAXOh4",
+   "publish": "2026-11-22T19:10:55.272709+05:30"
   }
  },
- "last_slot": "2026-11-22T15:09:30.884996+05:30"
+ "last_slot": "2026-11-22T19:10:55.272732+05:30"
 }
