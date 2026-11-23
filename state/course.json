@@ -59,7 +59,11 @@
   "analog2/a04_bandpass.json": {
    "id": "hVu-xNAXOh4",
    "publish": "2026-11-22T19:10:55.272709+05:30"
+  },
+  "analog2/a05_bandstop.json": {
+   "id": "jGB0J2_Zroo",
+   "publish": "2026-11-23T14:11:58.352728+05:30"
   }
  },
- "last_slot": "2026-11-22T19:10:55.272732+05:30"
+ "last_slot": "2026-11-23T14:11:58.352741+05:30"
 }
