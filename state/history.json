@@ -382,5 +382,11 @@
     "topic": "esp32 projects",
     "title": "The Hidden Danger of ESP32 Power Supplies & Bridge Rectifiers",
     "youtube_id": "pQDw624Hrrk"
+  },
+  {
+    "date": "2026-11-23",
+    "topic": "Filters in Electronics for BTech 1st Year",
+    "title": "Why Your Power Supply Output is Jagged: The Low Pass Filter Every Engineer Must Master",
+    "youtube_id": "m0-L2TYDOeM"
   }
 ]
