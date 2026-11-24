@@ -71,7 +71,11 @@
   "analog2/a07_series_reg.json": {
    "id": "u4Ncrcdn7B8",
    "publish": "2026-11-24T14:52:34.465721+05:30"
+  },
+  "analog2/a08_shunt_reg.json": {
+   "id": "jlc98uoLt_w",
+   "publish": "2026-11-24T18:50:03.162103+05:30"
   }
  },
- "last_slot": "2026-11-24T14:52:34.465739+05:30"
+ "last_slot": "2026-11-24T18:50:03.162122+05:30"
 }
