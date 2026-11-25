@@ -1,0 +1,110 @@
+name: Analog one-shot (render all chapters, join, upload)
+
+# Renders every chapter in gptk755blend/studio/explainer/episodes/oneshot in parallel, joins them into
+# ONE video (channel intro + chapters + outro) with chapter timestamps, and uploads it public.
+on:
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: "Upload to YouTube as PRIVATE when done (make public after checking)"
+        type: boolean
+        default: false
+
+permissions: {contents: write}
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs: {chapters: "${{ steps.l.outputs.c }}"}
+    steps:
+      - uses: actions/checkout@v4
+        with: {repository: sharath11yr/gptk755blend}
+      - id: l
+        run: echo "c=$(cd studio/explainer/episodes/oneshot && ls c*.json | sed 's/.json$//' | jq -R . | jq -cs .)" >> $GITHUB_OUTPUT
+
+  render:
+    needs: list
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix: {ch: "${{ fromJson(needs.list.outputs.chapters) }}"}
+    defaults: {run: {working-directory: blend/studio/explainer}}
+    steps:
+      - uses: actions/checkout@v4
+        with: {repository: sharath11yr/gptk755blend, path: blend}
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Render chapter
+        run: |
+          EP="episodes/oneshot/${{ matrix.ch }}.json"
+          npm ci || npm install
+          sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng ffmpeg
+          pip install -q edge-tts "kokoro>=0.9.4" soundfile
+          python voice.py "$EP" public props.json
+          npx remotion render src/index.ts Explainer out/video.mp4 --props=props.json --concurrency=4 --crf=20
+          # same encoding for every piece, so they can be joined without re-encoding
+          ffmpeg -y -loglevel error -i out/video.mp4 -i public/music.wav -filter_complex "[1:a]volume=0.35[m];[0:a][m]amix=inputs=2:duration=first:normalize=0,aresample=48000,aformat=channel_layouts=stereo[a]" \
+            -map 0:v -map "[a]" -vf "fps=30,format=yuv420p" -c:v libx264 -crf 21 -preset veryfast -c:a aac -b:a 160k -ar 48000 -ac 2 "out/${{ matrix.ch }}.mp4" \
+            || ffmpeg -y -loglevel error -i out/video.mp4 -vf "fps=30,format=yuv420p" -c:v libx264 -crf 21 -preset veryfast -c:a aac -b:a 160k -ar 48000 -ac 2 "out/${{ matrix.ch }}.mp4"
+          ffprobe -v error -show_entries format=duration -of csv=p=0 "out/${{ matrix.ch }}.mp4"
+      - uses: actions/upload-artifact@v4
+        with: {name: "ch-${{ matrix.ch }}", path: "blend/studio/explainer/out/${{ matrix.ch }}.mp4", retention-days: 5, compression-level: 0}
+
+  join:
+    needs: render
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: {repository: sharath11yr/gptk755blend, path: blend}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL; df -h /
+      - uses: actions/download-artifact@v4
+        with: {pattern: "ch-*", path: parts, merge-multiple: true}
+      - name: Join intro + chapters + outro
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          B=blend/studio/explainer/brand
+          E="-vf scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30,format=yuv420p -c:v libx264 -crf 21 -preset veryfast -c:a aac -b:a 160k -ar 48000 -ac 2"
+          ffmpeg -y -loglevel error -i $B/intro.mp4 $E parts/000_intro.mp4
+          ffmpeg -y -loglevel error -i $B/outro.mp4 $E parts/zzz_outro.mp4
+          python3 - <<'PY'
+          import json,subprocess,glob,os
+          d={}
+          for f in sorted(glob.glob("parts/*.mp4")):
+              s=float(subprocess.run(["ffprobe","-v","error","-show_entries","format=duration","-of","csv=p=0",f],capture_output=True,text=True).stdout)
+              k=os.path.basename(f)[:-4]; d["intro" if k=="000_intro" else k]=s
+          json.dump(d,open("durations.json","w"),indent=1); print(d, "total h", sum(d.values())/3600)
+          open("list.txt","w").write("".join(f"file '{f}'\n" for f in sorted(glob.glob("parts/*.mp4"))))
+          PY
+          ffmpeg -y -loglevel error -f concat -safe 0 -i list.txt -c copy -movflags +faststart oneshot.mp4
+          rm -rf parts; ls -la oneshot.mp4; ffprobe -v error -show_entries format=duration -of csv=p=0 oneshot.mp4
+      - name: Description (always) and upload (if asked)
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          ONESHOT_DRY: ${{ inputs.upload && '0' || '1' }}
+        run: |
+          pip install -q python-dotenv google-api-python-client google-auth httpx
+          python -m pipeline.oneshot upload oneshot.mp4 durations.json blend/studio/explainer/episodes/oneshot
+          if [ -f state/oneshot.json ]; then
+            git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add state/oneshot.json && git commit -qm "One-shot uploaded [skip ci]" && for i in 1 2 3 4; do git pull --rebase -q origin main && git push -q && break; sleep $((i*5)); done
+          fi
+      - name: Low-res preview for checking
+        run: ffmpeg -y -loglevel error -i oneshot.mp4 -vf scale=640:-2 -c:v libx264 -crf 32 -preset veryfast -c:a aac -b:a 64k preview.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oneshot-preview
+          retention-days: 5
+          path: |
+            preview.mp4
+            durations.json
