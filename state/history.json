@@ -394,5 +394,11 @@
     "topic": "Op Amp Circuits Explained",
     "title": "Op Amps Explained: Why Output Clips and Stays at Zero",
     "youtube_id": "A95b3sJkGho"
+  },
+  {
+    "date": "2026-11-25",
+    "topic": "Fourier Series and Signal Decomposition",
+    "title": "How Any Signal Becomes Sine Waves: The Fourier Series",
+    "youtube_id": "PyK2xH-IXIQ"
   }
 ]
