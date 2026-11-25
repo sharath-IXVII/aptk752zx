@@ -79,7 +79,11 @@
   "analog2/a09_switching_reg.json": {
    "id": "f6LIqWZRNuU",
    "publish": "2026-11-25T15:04:43.271290+05:30"
+  },
+  "analog2/a10_buck.json": {
+   "id": "EKNGWmVDB50",
+   "publish": "2026-11-25T18:50:54.288052+05:30"
   }
  },
- "last_slot": "2026-11-25T15:04:43.271310+05:30"
+ "last_slot": "2026-11-25T18:50:54.288073+05:30"
 }
