@@ -75,7 +75,11 @@
   "analog2/a08_shunt_reg.json": {
    "id": "jlc98uoLt_w",
    "publish": "2026-11-24T18:50:03.162103+05:30"
+  },
+  "analog2/a09_switching_reg.json": {
+   "id": "f6LIqWZRNuU",
+   "publish": "2026-11-25T15:04:43.271290+05:30"
   }
  },
- "last_slot": "2026-11-24T18:50:03.162122+05:30"
+ "last_slot": "2026-11-25T15:04:43.271310+05:30"
 }
