@@ -154,5 +154,5 @@ jobs:
         run: |
           cutoff=$(date -u -d '1 hour ago' +%Y-%m-%dT%H:%M:%SZ)
           gh api --paginate "repos/${{ github.repository }}/actions/artifacts?per_page=100" \
-            --jq ".artifacts[] | select(.created_at < \"$cutoff\") | .id" |
+            --jq ".artifacts[] | select(.created_at < \"$cutoff\") | select((.name | startswith(\"ch-\") or startswith(\"oneshot\")) | not) | .id" |
             while read -r id; do gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/$id" && echo "deleted $id"; done || true
