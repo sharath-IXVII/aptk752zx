@@ -91,7 +91,11 @@
   "analog2/a12_buck_boost.json": {
    "id": "DOwVChCLWBw",
    "publish": "2026-11-26T18:50:07.879115+05:30"
+  },
+  "analog2/a13_smps.json": {
+   "id": "P1HpG_iAjfA",
+   "publish": "2026-11-27T15:01:55.498108+05:30"
   }
  },
- "last_slot": "2026-11-26T18:50:07.879133+05:30"
+ "last_slot": "2026-11-27T15:01:55.498125+05:30"
 }
