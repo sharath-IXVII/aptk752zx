@@ -1,0 +1,127 @@
+2026-11-28 11:03:34,064 INFO Already scheduled: ['2026-11-09T12:00:00+05:30', '2026-11-09T15:00:00+05:30', '2026-11-09T18:00:00+05:30', '2026-11-10T12:00:00+05:30', '2026-11-10T15:00:00+05:30', '2026-11-10T18:00:00+05:30', '2026-11-11T12:00:00+05:30', '2026-11-11T18:00:00+05:30', '2026-11-12T12:00:00+05:30', '2026-11-12T18:00:00+05:30', '2026-11-13T12:00:00+05:30', '2026-11-13T18:00:00+05:30', '2026-11-14T12:00:00+05:30', '2026-11-14T18:00:00+05:30', '2026-11-15T12:00:00+05:30', '2026-11-15T18:00:00+05:30']
+2026-11-28 11:03:40,356 INFO Channel winners: The Working of Filters | From Pulsating DC to Smoo (45076); Types of Filters in Electronics | Low Pass, High P (3942); What Is a Clipper? | How Does a Clipper Actually W (3716); What Is a Diode? | How does a diode actually works (2915); What are Voltage Regulators? 🔌 | Analog Electronic (2699); How Does a Zener Diode Actually Work? | Controlled (2019)
+2026-11-28 11:03:42,951 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:03:42,960 INFO Search-led topic: zener diode circuit analysis (targets 'zener diode circuit analysis')
+2026-11-28 11:03:43,363 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:03:43,363 INFO Skipping 'zener diode circuit analysis': the channel already has 'Shunt Voltage Regulator Explained | Zener in Parallel, Limits & Power | Analog Electronics'
+2026-11-28 11:03:45,133 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:03:45,142 INFO Search-led topic: How to choose the right electronics project for your skill level (targets 'vlsi course')
+2026-11-28 11:03:45,622 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:03:46,132 INFO Search demand for 'vlsi course': median 101,720 views of the top 10 results (want 50,000-1,000,000)
+2026-11-28 11:03:54,801 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:04:02,943 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:04:02,943 INFO Fact-check 1 fix: Missing explicit statement of LED polarity (anode/cathode) and current flow direction in the initial hardware requirements section, contradicting the safety/orientation policy.
+2026-11-28 11:04:02,943 INFO Fact-check 1 fix: Missing explicit warning about the necessity of a resistor to prevent frying the LED or board pin, and the consequence of LED dimness due to incorrect resistance.
+2026-11-28 11:04:02,943 INFO Fact-check 1 fix: Incomplete description of the 'Minimum Viable Project' step: the script mentions connecting the LED to the power pin and ground but omits the explicit connection of the resistor in series, which is a critical circuit step.
+2026-11-28 11:04:02,943 INFO Fact-check 1 fix: The recap section states 'long leg to positive, short leg to negative' but fails to explicitly tie this to the 'current flows from positive to negative' mental model established earlier, creating a slight logical gap.
+2026-11-28 11:04:02,943 INFO Fact-check 1 fix: The comment question at the end offers 'Orientation,' 'Resistor,' or 'Wire' but the script previously listed the errors as 'wrong LED orientation, missing resistor, or loose wire'. The options should match the exact phrasing used in the recap for consistency.
+2026-11-28 11:04:02,943 INFO Fact-check 1 fix: Missing explicit electrical safety warning regarding incorrect connections (e.g., short circuits, frying components) as requested in the prompt instructions for the final output.
+2026-11-28 11:04:15,281 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:04:15,281 INFO Fact-check 2 fix: Missing explicit statement that the LED long leg (anode) connects to the resistor and then to the power pin, and the short leg (cathode) connects to ground. The script mentions orientation but does not explicitly describe the complete connection path for the LED circuit in Step 2.
+2026-11-28 11:04:15,281 INFO Fact-check 2 fix: The script states 'Current flows from positive to negative' but does not explicitly state that the resistor must be placed on the anode (positive) side of the LED to limit current correctly, which is a critical detail for beginners.
+2026-11-28 11:04:15,281 INFO Fact-check 2 fix: The safety warning 'Always ensure the circuit is unpowered before adjusting connections' is placed at the very end of the video rather than being integrated contextually or stated as a primary safety step at the beginning.
+2026-11-28 11:04:15,281 INFO Fact-check 2 fix: The script implies that any computer can be used but does not explicitly state that drivers or specific board support may be required depending on the OS, which is a common practical hurdle for beginners.
+2026-11-28 11:04:15,281 INFO Fact-check 2 fix: The comment question asks viewers to type 'Orientation,' 'Resistor,' or 'Wire' but does not provide the correct answer key or explanation in the video text, missing an educational reinforcement opportunity.
+2026-11-28 11:04:17,347 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:04:17,429 INFO People search for: vlsi course; vlsi course for beginners; vlsi course iit; vlsi course mit; vlsi course in telugu; vlsi course for job
+2026-11-28 11:04:17,892 INFO Using NVIDIA model: nvidia/nemotron-3.5-lightning-30b-a3b
+2026-11-28 11:04:17,893 INFO Title polished: Choosing the Right Electronics Project | VLSI Course for Beginners | Avoid the 70% Trap -> Why 70% of Beginners Fail at VLSI Projects (And How to Avoid It)
+2026-11-28 11:04:17,893 INFO YouTube title: Why 70% of Beginners Fail at VLSI Projects (And How to Avoid It)
+2026-11-28 11:04:19,009 INFO Created notebook b506d326-c1c6-4762-81fe-426abbcadfeb
+2026-11-28 11:04:21,369 INFO Script added as source
+2026-11-28 11:04:23,528 INFO Started cinematic video generation (task 661ea741-536e-4061-ba39-0625725ad575)
+2026-11-28 11:04:23,529 INFO Waiting for cinematic video (can take 30+ minutes)
+2026-11-28 11:32:15,261 INFO Downloaded cinematic video to output/video_raw.mp4
+2026-11-28 11:32:17,395 INFO Started NotebookLM Short (task e432c8b5-2171-455d-977f-eb9d67b11ddf)
+2026-11-28 11:41:57,693 INFO Downloaded NotebookLM Short to output/short_raw.mp4
+2026-11-28 11:42:00,490 INFO Video selected on https://notebooklmremover.com/en, waiting for processing
+2026-11-28 11:42:02,107 INFO Chose site mode 'Quality Priority (Original FPS, Slow)'
+2026-11-28 11:42:03,110 INFO Clicking '🚀 Start Removing Watermark'
+2026-11-28 11:42:16,365 INFO Watermark removal: 0%
+2026-11-28 11:42:21,371 INFO Watermark removal: 2%
+2026-11-28 11:42:26,375 INFO Watermark removal: 3%
+2026-11-28 11:42:31,380 INFO Watermark removal: 5%
+2026-11-28 11:42:36,385 INFO Watermark removal: 8%
+2026-11-28 11:42:41,390 INFO Watermark removal: 10%
+2026-11-28 11:42:46,395 INFO Watermark removal: 13%
+2026-11-28 11:42:51,400 INFO Watermark removal: 15%
+2026-11-28 11:42:56,404 INFO Watermark removal: 17%
+2026-11-28 11:43:01,409 INFO Watermark removal: 19%
+2026-11-28 11:43:06,415 INFO Watermark removal: 22%
+2026-11-28 11:43:11,634 INFO Watermark removal: 24%
+2026-11-28 11:43:16,646 INFO Watermark removal: 26%
+2026-11-28 11:43:21,707 INFO Watermark removal: 29%
+2026-11-28 11:43:26,712 INFO Watermark removal: 31%
+2026-11-28 11:43:31,716 INFO Watermark removal: 34%
+2026-11-28 11:43:36,722 INFO Watermark removal: 36%
+2026-11-28 11:43:41,726 INFO Watermark removal: 38%
+2026-11-28 11:43:46,731 INFO Watermark removal: 40%
+2026-11-28 11:43:51,736 INFO Watermark removal: 42%
+2026-11-28 11:43:56,741 INFO Watermark removal: 44%
+2026-11-28 11:44:01,744 INFO Watermark removal: 46%
+2026-11-28 11:44:06,749 INFO Watermark removal: 49%
+2026-11-28 11:44:11,947 INFO Watermark removal: 52%
+2026-11-28 11:44:16,951 INFO Watermark removal: 54%
+2026-11-28 11:44:21,956 INFO Watermark removal: 56%
+2026-11-28 11:44:26,960 INFO Watermark removal: 59%
+2026-11-28 11:44:31,965 INFO Watermark removal: 61%
+2026-11-28 11:44:36,971 INFO Watermark removal: 64%
+2026-11-28 11:44:41,976 INFO Watermark removal: 66%
+2026-11-28 11:44:46,980 INFO Watermark removal: 68%
+2026-11-28 11:44:51,984 INFO Watermark removal: 71%
+2026-11-28 11:44:56,990 INFO Watermark removal: 73%
+2026-11-28 11:45:01,994 INFO Watermark removal: 76%
+2026-11-28 11:45:06,999 INFO Watermark removal: 78%
+2026-11-28 11:45:12,203 INFO Watermark removal: 79%
+2026-11-28 11:45:17,207 INFO Watermark removal: 82%
+2026-11-28 11:45:22,212 INFO Watermark removal: 84%
+2026-11-28 11:45:27,215 INFO Watermark removal: 87%
+2026-11-28 11:45:32,221 INFO Watermark removal: 89%
+2026-11-28 11:45:37,226 INFO Watermark removal: 92%
+2026-11-28 11:45:42,231 INFO Watermark removal: 94%
+2026-11-28 11:45:47,236 INFO Watermark removal: 97%
+2026-11-28 11:45:57,245 INFO Clicking 'Download Clean Video'
+2026-11-28 11:46:05,837 INFO Downloaded clean video after 242s
+2026-11-28 11:46:05,987 INFO Website result: {'width': 1280, 'height': 720, 'fps': 30.0, 'duration': 366.271565, 'has_audio': True} (original {'width': 1280, 'height': 720, 'fps': 30.0, 'duration': 369.313379, 'has_audio': True})
+2026-11-28 11:46:06,028 INFO Adding channel name watermark: GetYr_ECE
+2026-11-28 11:47:50,488 INFO Added intro + video_final_main + outro
+2026-11-28 11:47:50,488 INFO Edited video saved to output/video_final.mp4
+2026-11-28 11:47:50,693 INFO Thumbnail candidate at 0.5s: detail 15.2
+2026-11-28 11:47:50,899 INFO Thumbnail candidate at 1.0s: detail 15.2
+2026-11-28 11:47:51,108 INFO Thumbnail candidate at 1.5s: detail 15.2
+2026-11-28 11:47:51,323 INFO Thumbnail candidate at 2.0s: detail 15.2
+2026-11-28 11:47:51,542 INFO Thumbnail candidate at 2.5s: detail 15.2
+2026-11-28 11:47:51,764 INFO Thumbnail candidate at 3.0s: detail 15.2
+2026-11-28 11:47:51,985 INFO Thumbnail candidate at 3.5s: detail 15.2
+2026-11-28 11:47:52,223 INFO Thumbnail candidate at 4.0s: detail 15.2
+2026-11-28 11:47:52,436 INFO Thumbnail candidate at 5.0s: detail 24.9
+2026-11-28 11:47:52,467 INFO Thumbnail taken from the video at 5.0s -> output/thumbnail.jpg
+2026-11-28 11:47:54,692 INFO Upload 16%
+2026-11-28 11:47:55,479 INFO Upload 32%
+2026-11-28 11:47:56,540 INFO Upload 49%
+2026-11-28 11:47:57,439 INFO Upload 65%
+2026-11-28 11:47:58,113 INFO Upload 82%
+2026-11-28 11:47:58,659 INFO Upload 98%
+2026-11-28 11:47:59,050 INFO Uploaded: https://youtu.be/EIcDAL6mi24 (public)
+2026-11-28 11:48:01,216 INFO Thumbnail set
+2026-11-28 11:48:02,073 INFO Added to playlist: How Technology Works
+2026-11-28 11:48:04,821 INFO Video selected on https://notebooklmremover.com/en, waiting for processing
+2026-11-28 11:48:06,443 INFO Chose site mode 'Quality Priority (Original FPS, Slow)'
+2026-11-28 11:48:07,447 INFO Clicking '🚀 Start Removing Watermark'
+2026-11-28 11:48:10,474 INFO Watermark removal: 1%
+2026-11-28 11:48:15,721 INFO Watermark removal: 12%
+2026-11-28 11:48:20,727 INFO Watermark removal: 25%
+2026-11-28 11:48:25,732 INFO Watermark removal: 39%
+2026-11-28 11:48:30,736 INFO Watermark removal: 54%
+2026-11-28 11:48:35,741 INFO Watermark removal: 69%
+2026-11-28 11:48:40,745 INFO Watermark removal: 84%
+2026-11-28 11:48:45,748 INFO Clicking 'Download Clean Video'
+2026-11-28 11:48:53,844 INFO Downloaded clean video after 46s
+2026-11-28 11:48:53,992 INFO Website result: {'width': 720, 'height': 1280, 'fps': 30.0, 'duration': 67.268209, 'has_audio': True} (original {'width': 720, 'height': 1280, 'fps': 30.0, 'duration': 70.333243, 'has_audio': True})
+2026-11-28 11:49:02,150 INFO Using NotebookLM's Short (watermark removed)
+2026-11-28 11:49:03,973 INFO Uploaded: https://youtu.be/Ah8j_xVZlzs (public)
+2026-11-28 11:49:03,974 INFO Short uploaded: https://youtu.be/Ah8j_xVZlzs
+2026-11-28 11:49:57,793 WARNING Instagram direct upload failed: Instagram upload failed (400): {"debug_info":{"retriable":false,"type":"ProcessingFailedError","message":"Request processing failed"}} - trying the public-link method
+2026-11-28 11:51:08,072 INFO Instagram Reel posted via link (id 17937609885225689)
+2026-11-28 11:51:09,542 INFO Done: Why 70% of Beginners Fail at VLSI Projects (And How to Avoid It)
+2026-11-28 11:51:11,061 INFO Deleted old NotebookLM notebook b506d326-c1c6-4762-81fe-426abbcadfeb
